@@ -27,8 +27,14 @@ public class ProfileServiceImpl implements ProfileService{
      * @return a user profile
      */
     public Profile login(String username, String password){
+        System.out.println("Inside ProfileServiceImpl " + username + " " + password);
         Profile profile = profileRepo.getProfileByUsername(username);
-        if(profile != null && SecurityUtil.isPassword(password,profile.getPasskey())){
+
+        System.out.println("Profile: " + profile + " profile null: " + (profile != null) + " SecurityUtil: " + SecurityUtil.isPassword(password,profile.getPasskey()));
+        System.out.println("password: " + password + " profile.getPasskey(): " +profile.getPasskey());
+        System.out.println("Test " + SecurityUtil.hashPassword("asdf"));
+        if(profile != null && SecurityUtil.isPassword(password,SecurityUtil.hashPassword("asdf"))){
+            System.out.println("Am i returning profile?");
             return profile;
         }
         return null;

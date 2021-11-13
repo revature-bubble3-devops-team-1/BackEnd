@@ -110,6 +110,9 @@ public class SecurityUtil {
         if (passKey.length() < 88) return false;
 
         String encrypted = hashPassword(password, passKey.substring(88));
+        System.out.println("Encrypted: " + encrypted);
+        System.out.println("Passkey substring: " + passKey.substring(0,88));
+
         if (encrypted == null) {
             logger.error("Unable to verify password validity. Exiting method and returning false.");
             return false;
