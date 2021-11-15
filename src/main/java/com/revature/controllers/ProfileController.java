@@ -35,7 +35,6 @@ public class ProfileController {
      */
     @PostMapping
     public ResponseEntity<Profile> login( String username, String password) {
-        System.out.println(username + " " + password);
 
         Profile profile = profileService.login(username,password);
         if(profile != null){
