@@ -37,7 +37,6 @@ public class ProfileController {
     public ResponseEntity<Profile> login( String username, String password) {
 
         Profile profile = profileService.login(username,password);
-        System.out.println(profile);
         if(profile != null){
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", SecurityUtil.generateToken(profile));

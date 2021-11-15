@@ -178,6 +178,12 @@ public class ProfileServiceTest {
 
     @Test
     public void temp(){
-        System.out.println(SecurityUtil.hashPassword("asdf"));
+        String a = SecurityUtil.hashPassword("asdf");
+        String b = SecurityUtil.hashPassword("asdf");
+        String c = SecurityUtil.hashPassword("asdf");
+        SecurityUtil.isPassword(a, b);
+        System.out.println(SecurityUtil.isPassword("asdf", b));
+        System.out.println("Key Under this");
+        System.out.println(b);
     }
 }

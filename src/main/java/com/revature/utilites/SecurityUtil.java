@@ -114,6 +114,7 @@ public class SecurityUtil {
             logger.error("Unable to verify password validity. Exiting method and returning false.");
             return false;
         }
+
         return encrypted.equals(passKey.substring(0,88));
     }
 
