@@ -34,8 +34,8 @@ public class ProfileController {
      * @return secure token and profile as json
      */
     @PostMapping
-    @NoAuthIn
-    public ResponseEntity<Profile> login(String username, String password) {
+    public ResponseEntity<Profile> login( String username, String password) {
+
         Profile profile = profileService.login(username,password);
         System.out.println(profile);
         if(profile != null){
