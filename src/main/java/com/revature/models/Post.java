@@ -23,7 +23,8 @@ public class Post {
 
 	@ManyToOne
 	@JoinColumn(name = "profile_id", nullable = false)
-	private Profile creator;
+	private Profile creator; //*<- to note: please use the proper name of the column to create new
+	// methods in the repo. The repo will flip out on you if you don't.
 
 	@Column(name = "body")
 	private String body;
@@ -39,10 +40,13 @@ public class Post {
 	@ElementCollection()
 	private Set<Integer> likes = new LinkedHashSet<>();
 
+	//new bookmarks table to identify bookmarks by post_id (post that was bookmarked) and the
+	// profile_id (user/profile that bookmarked the post) ~ Modeled after likes table.
+
 	@CollectionTable(name = "bookmarks", joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "post_id"))
 	@Column(name = "profile_id")
 	@ElementCollection()
-	private Set<Integer> bookmarks = new LinkedHashSet<>();
+	private Set<Integer> bookmarks = new LinkedHashSet<>(); //Don't forget to swing by the Post DTO if you update the model and declare this.
 
 	@ManyToOne
 	private Group group;

@@ -15,6 +15,8 @@ public interface PostRepo extends JpaRepository<Post, Integer> {
     Page<Post> getPostsByCreator(Pageable pageable, int profileID );
     List<Post> findTop3ByCreator(Profile profile, Sort sort);
 
+    //Avoid this repository if possible - it is very temperamental. It likes ice-cream and long walks on the beach.
+    // It also likes to use proper terminology as per the note in the post model.
     List<Post> findAllByGroupGroupId(int groupId);
     Post getPostByPsid(Integer psid);
     List<Post> findAllByCreator(Profile profile);

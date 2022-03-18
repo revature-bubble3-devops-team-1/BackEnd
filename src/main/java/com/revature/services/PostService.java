@@ -17,6 +17,7 @@ public interface PostService {
     int likeGet(Post post);
     Profile likeFindByID(Profile profile, Post post);
 
+    //Bookmark Methods
     Profile bookmarkPost(Profile profile, Post post);
     int bookmarkDelete(Profile profile, Post post);
     int bookmarkGet(Post post);

@@ -18,6 +18,9 @@ import lombok.Data;
  * @batch: 211129-Enterprise
  *
  */
+
+//I was a DAO model not a DTO model Cohort. If you're in the same boat and reading this - smile and act like you go this.
+// You don't need to get it, you just have to work with it. It's kind of like an extension to the Model.
 @Data
 @AllArgsConstructor
 public class PostDTO {
@@ -34,7 +37,8 @@ public class PostDTO {
 
 	private Set<Integer> likes = new LinkedHashSet<>();
 
-	private Set<Integer> bookmarks = new LinkedHashSet<>();
+	private Set<Integer> bookmarks = new LinkedHashSet<>(); //Bookmark set declared in DTO.
+	// Look Below. Add to Post toPost() and add to or create a constructor.
 
 	private GroupDTO group;
 
