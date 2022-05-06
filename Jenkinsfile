@@ -11,11 +11,11 @@ pipeline {
     }
 
     environment {
-        PORT = 5000
-        VERSION = "test"
-        registry       = 'archieaqua/bubble-b'
-        CRED = "dockerhub"
-        dockerImage    = ''
+        PORT           = 5000
+        VERSION        = "test"
+        REGISTRY       = 'archieaqua/bubble-b'
+        CRED           = "dockerhub"
+        DOCKERIMAGE    = ''
     }
 
     stages {
@@ -84,7 +84,7 @@ pipeline {
 //         }
         stage('Create Image') {
             steps {
-                docker build("${env.registry}:${env.VERSION}.${env.BUILD_ID}")
+                docker build("${env.REGISTRY}:${env.VERSION}.${env.BUILD_ID}")
 //                 discordSend description: ":screwdriver: *Built New Docker Image*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
             }
         }
@@ -104,13 +104,13 @@ pipeline {
 // //                 discordSend description: ":face_in_clouds: *Pushed Latest to DockerHub*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
 //             }
 // //         }
-//            stage("Build Docker Image") {
-//                steps{
-//                    script{
-//                        dockerImage = docker.build "$registry"
-//                    }
-//                }
-//            }
+           stage("Build Docker Image") {
+               steps{
+                   script{
+                       dockerImage = docker.build "$REGISTRY"
+                   }
+               }
+           }
            stage("Push Image to DockerHub") {
                steps {
                    script {
