@@ -1,10 +1,10 @@
-def testfail = true
 pipeline {
     agent any
 
     tools {
         maven 'Maven'
     }
+
     options {
         buildDiscarder(logRotator(daysToKeepStr: '7', numToKeepStr: '1'))
         disableConcurrentBuilds()
@@ -12,11 +12,10 @@ pipeline {
 
     environment {
         PORT = 5000
-        // IMAGE_TAG = "cpete22/revature-bubble:be"
-        // CONTAINER_NAME = "bubblebe"
-        // CRED = "dockerhub"
+        IMAGE_TAG = "latest"
         registry       = 'archieaqua/bubble-b'
-        dockerHubCreds = 'dockerhub'
+        CONTAINER_NAME = "bubble-b"
+        CRED = "dockerhub"
         dockerImage    = ''
     }
 
