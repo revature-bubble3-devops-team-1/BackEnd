@@ -110,7 +110,7 @@ pipeline {
         //                dockerImage = docker.build "$REGISTRY"
         //            }
         //        }
-           }
+        //    }
            stage("Push Image to DockerHub") {
                steps {
                    script {
