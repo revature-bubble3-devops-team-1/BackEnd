@@ -82,6 +82,10 @@ pipeline {
 // //                 discordSend description: ":axe: *Removed Previous Docker Artifacts*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
 //             }
 //         }
+        stage('Initialize'){
+                def dockerHome = tool 'docker'
+                env.PATH = "${dockerHome}/bin:${env.PATH}"
+            }
         stage('Create Image') {
             steps {
                 script{
