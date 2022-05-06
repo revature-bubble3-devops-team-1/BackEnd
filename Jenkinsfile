@@ -23,7 +23,7 @@ pipeline {
         stage('Code Quality Analysis'){
             steps{
                 withSonarQubeEnv(credentialsId: 'sonar-token', installationName: 'sonar'){
-                    sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=revature-bubble3-devops-team-1'
+                    sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=revature-bubble3-devops-team-1_BackEnd'
                 }
             }
         }
@@ -85,7 +85,7 @@ pipeline {
 //         }
         stage('Create Image') {
             steps {
-                sh 'docker build -t ${IMAGE_TAG} -f Dockerfile .'
+                sh 'docker build("${env.CONTAINER_NAME}:${env.BUILD_ID})'
 //                 discordSend description: ":screwdriver: *Built New Docker Image*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
             }
         }
@@ -104,20 +104,19 @@ pipeline {
 //                 }
 // //                 discordSend description: ":face_in_clouds: *Pushed Latest to DockerHub*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
 //             }
-//         }
-           stage("Build Docker Image") {
-               steps{
-                   script{
-                       dockerImage = docker.build "$registry"
-                   }
-               }
-           }
+// //         }
+//            stage("Build Docker Image") {
+//                steps{
+//                    script{
+//                        dockerImage = docker.build "$registry"
+//                    }
+//                }
+//            }
            stage("Push Image to DockerHub") {
                steps {
                    script {
-                       docker.withRegitry('', dockerHubCreds){
-                           dockerImage.push("$currentBuild.number")
-                           dockerImage.push("test")
+                       docker.withRegitry('', CRED){
+                           docker.image(IMAGE_TAG).push()
                        }
                    }
                }
