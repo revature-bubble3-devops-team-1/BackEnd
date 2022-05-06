@@ -114,7 +114,7 @@ pipeline {
            stage("Push Image to DockerHub") {
                steps {
                    script {
-                       docker.withRegitry('', CREDS){
+                       docker.withRegistry('', CREDS){
                            docker.image(VERSION).push()
                        }
                    }
