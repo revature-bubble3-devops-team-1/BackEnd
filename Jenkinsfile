@@ -86,7 +86,7 @@ pipeline {
             steps {
                 script{
 
-                docker build("${env.REGISTRY}:${env.VERSION}.${env.BUILD_ID}")
+                docker.build("${env.REGISTRY}:${env.VERSION}.${env.BUILD_ID}")
                 }
 //                 discordSend description: ":screwdriver: *Built New Docker Image*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
             }
