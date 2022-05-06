@@ -85,7 +85,7 @@ pipeline {
 //         }
         stage('Create Image') {
             steps {
-                sh 'docker build("${env.CONTAINER_NAME}:${env.BUILD_ID})'
+                docker build("${env.CONTAINER_NAME}:${env.BUILD_ID}")
 //                 discordSend description: ":screwdriver: *Built New Docker Image*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
             }
         }
