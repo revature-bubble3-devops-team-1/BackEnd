@@ -12,7 +12,7 @@ pipeline {
 
     environment {
         PORT = 5000
-        IMAGE_TAG = "latest"
+        IMAGE_TAG = "test"
         registry       = 'archieaqua/bubble-b'
         CONTAINER_NAME = "bubble-b"
         CRED = "dockerhub"
@@ -23,13 +23,13 @@ pipeline {
         stage('Code Quality Analysis'){
             steps{
                 withSonarQubeEnv(credentialsId: 'sonar-token', installationName: 'sonar'){
-                    sh 'mvn Backend/ verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=revature-bubble3-devops-team-1'
+                    sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=revature-bubble3-devops-team-1'
                 }
             }
         }
         stage('Clean & Package Directory') {
             steps {
-                sh 'mvn -f Backend/pom.xml clean package -Dmaven.test.skip'
+                sh 'mvn clean'
 //                 discordSend description: ":soap: *Cleaned ${env.JOB_NAME}*", result: currentBuild.currentResult,
 //                 webhookURL: env.WEBHO_BE
             }
@@ -41,12 +41,12 @@ pipeline {
 //                 script {testfail = false}
 //             }
 //         }
-//         stage('Package Jar') {
-//             steps {
-//                 sh 'mvn -DskipTests package'
-// //                 discordSend description: ":package: *Packaged ${env.JOB_NAME}*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
-//             }
-//         }
+        stage('Package Jar') {
+            steps {
+                sh 'mvn -DskipTests package'
+//                 discordSend description: ":package: *Packaged ${env.JOB_NAME}*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
+            }
+        }
         // stage('SonarCloud') {
         //     environment {
         //         SCANNER_HOME = tool 'sonar'
@@ -83,12 +83,12 @@ pipeline {
 // //                 discordSend description: ":axe: *Removed Previous Docker Artifacts*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
 //             }
 //         }
-//         stage('Create Image') {
-//             steps {
-//                 sh 'docker build -t ${IMAGE_TAG} -f Dockerfile .'
-// //                 discordSend description: ":screwdriver: *Built New Docker Image*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
-//             }
-//         }
+        stage('Create Image') {
+            steps {
+                sh 'docker build -t ${IMAGE_TAG} -f Dockerfile .'
+//                 discordSend description: ":screwdriver: *Built New Docker Image*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
+            }
+        }
 //         stage('Run Container') {
 //             steps {
 //                 sh 'docker run -d --env DB_URL --env DB_USER --env DB_PASS --rm -p ${PORT}:${PORT} --name ${CONTAINER_NAME} ${IMAGE_TAG} '
@@ -117,7 +117,7 @@ pipeline {
                    script {
                        docker.withRegitry('', dockerHubCreds){
                            dockerImage.push("$currentBuild.number")
-                           dockerImage.push("latest")
+                           dockerImage.push("test")
                        }
                    }
                }
