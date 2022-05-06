@@ -63,21 +63,21 @@ pipeline {
         //         }
         //     }
         // }
-        stage("Quality Gate") {
-            steps {
-               script{
-                    timeout(time: 40, unit: 'MINUTES') {
-                        approved = input mesasage: 'Deploy to production?', ok: 'Continue',
-                            parameters: [choice(name: 'approved', choices: 'Yes\nNo', description: 'Deploy this build to production')]
-                        if(approved != 'Yes'){
-                            error('Build not approved')
-                            }
-                        }
-                    } catch (error){
-                        error('Build not approved in time')
-                    }
-                }
-            }
+        // stage("Quality Gate") {
+        //     steps {
+        //        script{
+        //             timeout(time: 40, unit: 'MINUTES') {
+        //                 approved = input mesasage: 'Deploy to production?', ok: 'Continue',
+        //                     parameters: [choice(name: 'approved', choices: 'Yes\nNo', description: 'Deploy this build to production')]
+        //                 if(approved != 'Yes'){
+        //                     error('Build not approved')
+        //                     }
+        //                 }
+        //             } catch (error){
+        //                 error('Build not approved in time')
+        //             }
+        //         }
+        //     }
 //         stage('Remove Previous Artifacts') {
 //             steps {
 //                 sh 'docker stop ${CONTAINER_NAME} || true'
