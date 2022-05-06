@@ -3,6 +3,8 @@ pipeline {
 
     tools {
         maven 'maven'
+        'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
+}
     }
 
     options {
@@ -16,6 +18,7 @@ pipeline {
         REGISTRY       = 'archieaqua/bubble-b'
         CRED           = "dockerhub-creds"
         DOCKERIMAGE    = ''
+
     }
 
     stages {
@@ -82,12 +85,7 @@ pipeline {
 // //                 discordSend description: ":axe: *Removed Previous Docker Artifacts*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
 //             }
 //         }
-        stage('Initialize'){
-            steps{
-                def dockerHome = tool 'docker'
-                env.PATH = "${dockerHome}/bin:${env.PATH}"
-                }
-            }
+
         stage('Create Image') {
             steps {
                 script{
