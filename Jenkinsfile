@@ -12,9 +12,8 @@ pipeline {
 
     environment {
         PORT = 5000
-        IMAGE_TAG = "test"
+        VERSION = "test"
         registry       = 'archieaqua/bubble-b'
-        CONTAINER_NAME = "bubble-b"
         CRED = "dockerhub"
         dockerImage    = ''
     }
@@ -85,7 +84,7 @@ pipeline {
 //         }
         stage('Create Image') {
             steps {
-                docker build("${env.CONTAINER_NAME}:${env.BUILD_ID}")
+                docker build("${env.registry}:${env.VERSION}.${env.BUILD_ID}")
 //                 discordSend description: ":screwdriver: *Built New Docker Image*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
             }
         }
@@ -116,7 +115,7 @@ pipeline {
                steps {
                    script {
                        docker.withRegitry('', CRED){
-                           docker.image(IMAGE_TAG).push()
+                           docker.image(VERSION).push()
                        }
                    }
                }
