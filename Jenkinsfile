@@ -14,7 +14,7 @@ pipeline {
         PORT           = 5000
         VERSION        = "test"
         REGISTRY       = 'archieaqua/bubble-b'
-        CRED           = "dockerhub"
+        CRED           = "dockerhub-creds"
         DOCKERIMAGE    = ''
     }
 
@@ -104,17 +104,17 @@ pipeline {
 // //                 discordSend description: ":face_in_clouds: *Pushed Latest to DockerHub*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
 //             }
 // //         }
-           stage("Build Docker Image") {
-               steps{
-                   script{
-                       dockerImage = docker.build "$REGISTRY"
-                   }
-               }
+        //    stage("Build Docker Image") {
+        //        steps{
+        //            script{
+        //                dockerImage = docker.build "$REGISTRY"
+        //            }
+        //        }
            }
            stage("Push Image to DockerHub") {
                steps {
                    script {
-                       docker.withRegitry('', CRED){
+                       docker.withRegitry('', CREDS){
                            docker.image(VERSION).push()
                        }
                    }
