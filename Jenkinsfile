@@ -4,7 +4,6 @@ pipeline {
     tools {
         maven 'maven'
         'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
-}
     }
 
     options {
