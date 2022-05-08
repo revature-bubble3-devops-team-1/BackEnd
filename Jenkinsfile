@@ -9,7 +9,7 @@ kind: Pod
 spec:
 containers:
 - name: docker-client
-  image: docker:19.03.1
+  image: docker:19.03.15
   command: ['sleep', '99d']
   env:
     - name: DOCKER_HOST
