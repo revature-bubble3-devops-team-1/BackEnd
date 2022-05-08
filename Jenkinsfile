@@ -159,6 +159,7 @@ volumes:
         //    }
            stage("Push Image to DockerHub") {
                steps {
+                   container('docker-client'){
                    script {
                        docker.withRegistry('', CREDS){
                            docker.image(VERSION).push()
@@ -166,6 +167,7 @@ volumes:
                    }
                }
            }
+        }
     //        stage("create kubeconfig file"){
 
     //        }
