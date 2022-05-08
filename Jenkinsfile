@@ -2,11 +2,11 @@ pipeline {
     agent {
         kubernetes {
             label 'docker-in-docker-maven'
-            yaml
+            yaml {
 apiVersion: v1
 kind: Pod
 spec:
-containers {
+containers:
 - name: docker-client
   image: docker:19.03.1
   command: ['sleep', '99d']
