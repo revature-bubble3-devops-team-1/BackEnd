@@ -64,7 +64,7 @@ volumes:
         //     steps {
         //         git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
         //     }
-        }
+        // }
 
         stage('Clean & Package Directory') {
             steps {
