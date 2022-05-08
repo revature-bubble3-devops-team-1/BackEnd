@@ -2,11 +2,15 @@ pipeline {
     agent {
         kubernetes {
             label 'docker-in-docker-maven'
+            defaultContainer 'jnlp'
             yaml: 
 apiVersion: v1
 kind: Pod
 spec:
 containers:
+ - name: jnlp
+   image: ikenoxamos/jenkins-slave:latest
+   workingDir: /home/jenkins
 - name: docker-client
   image: docker:19.03.1
   command: ['sleep', '99d']
