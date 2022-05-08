@@ -3,7 +3,7 @@ pipeline {
         kubernetes {
             label 'docker-in-docker-maven'
             defaultContainer 'jnlp'
-            yaml: 
+            yaml """ 
 apiVersion: v1
 kind: Pod
 spec:
@@ -32,7 +32,7 @@ volumes:
     hostPath:
       path: /tmp
       type: Directory
-        
+        """
     }
 } 
 
