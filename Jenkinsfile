@@ -11,11 +11,21 @@ containers:
 - name: docker-client
   image: docker:19.03.15
   command: ['sleep', '99d']
+- name: jnlp
+  image: ikenoxamos/jenkins-slave:latest
+  workingDir: /home/jenkins
   env:
     - name: DOCKER_HOST
       value: tcp://localhost:2375
+    resources:
+            requests:
+                memory: "500Mi"
+                cpu: "0.3"
+            limits:
+                memory: "800Mi"
+                cpu: "0.5"
 - name: docker-daemon
-  image: docker:19.03.1-dind
+  image: docker:19.03.15-dind
   env:
     - name: DOCKER_TLS_CERTDIR
       value: ""
