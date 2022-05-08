@@ -6,7 +6,7 @@ pipeline {
 apiVersion: v1
 kind: Pod
 spec:
-containers:
+containers {
 - name: docker-client
   image: docker:19.03.1
   command: ['sleep', '99d']
@@ -29,7 +29,8 @@ volumes:
       path: /tmp
       type: Directory
         }
-    } 
+    }
+} 
 
     tools {
         maven 'maven'
