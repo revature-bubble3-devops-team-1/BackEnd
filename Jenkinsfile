@@ -60,6 +60,12 @@ volumes:
         //         }
         //     }
         // }
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
+            }
+        }
+
         stage('Clean & Package Directory') {
             steps {
                 sh 'mvn clean'
@@ -119,13 +125,15 @@ volumes:
 
         stage('Create Image') {
             steps {
+                container('docker-client'){
                 script{
 
                 docker.build("${env.REGISTRY}:${env.VERSION}.${env.BUILD_ID}")
                 }
-//                 discordSend description: ":screwdriver: *Built New Docker Image*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
             }
+//                 discordSend description: ":screwdriver: *Built New Docker Image*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
         }
+    }
 //         stage('Run Container') {
 //             steps {
 //                 sh 'docker run -d --env DB_URL --env DB_USER --env DB_PASS --rm -p ${PORT}:${PORT} --name ${CONTAINER_NAME} ${IMAGE_TAG} '
