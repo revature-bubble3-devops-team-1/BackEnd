@@ -21,7 +21,7 @@ containers:
 volumes:
   - name: cache
     hostPath:
-        path: /tmp
+        path: /var/run/docker.sock
         type: Directory
 """
     }
