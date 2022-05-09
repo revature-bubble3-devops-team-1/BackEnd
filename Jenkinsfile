@@ -137,7 +137,7 @@ volumes:
 
         stage('Create Image') {
             steps {
-                container('docker-client'){
+                container('docker'){
                 script{
 
                 docker.build("${env.REGISTRY}:${env.VERSION}.${env.BUILD_ID}")
@@ -171,7 +171,7 @@ volumes:
         //    }
            stage("Push Image to DockerHub") {
                steps {
-                   container('docker-client'){
+                   container('docker'){
                    script {
                        docker.withRegistry('', CREDS){
                            docker.image(VERSION).push()
