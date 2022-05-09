@@ -70,10 +70,11 @@ volumes:
 
         stage('Clean & Package Directory') {
             steps {
-                container('maven')
+                container('maven'){
                 sh 'mvn clean'
 //                 discordSend description: ":soap: *Cleaned ${env.JOB_NAME}*", result: currentBuild.currentResult,
 //                 webhookURL: env.WEBHO_BE
+                }
             }
         }
 //         stage('Run Tests') {
@@ -85,9 +86,10 @@ volumes:
 //         }
         stage('Package Jar') {
             steps {
-                container('maven')
+                container('maven'){
                 sh 'mvn -DskipTests package'
 //                 discordSend description: ":package: *Packaged ${env.JOB_NAME}*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
+                }
             }
         }
         // stage('SonarCloud') {
