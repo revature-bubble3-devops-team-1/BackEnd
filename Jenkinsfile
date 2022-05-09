@@ -162,7 +162,7 @@ spec:
                    container('docker'){
                    script {
                        docker.withRegistry('', DOCKERHUBCREDS){
-                           dockerImage.push(VERSION)
+                           docker.image.push(VERSION)
                        }
                    }
                }
