@@ -2,12 +2,16 @@ pipeline {
     agent {
         kubernetes {
             label 'docker-in-docker-maven'
-            defaultContainer 'jnlp'
+            defaultContainer 'maven'
             yaml """ 
 apiVersion: v1
 kind: Pod
 spec:
 containers:
+    - name: maven
+      image: maven:3.5.4-jdk-8-slim
+      command: ["tail", "-f", "/dev/null"]
+      imagePullPolicy: 
 - name: docker-client
   image: docker:19.03.15
   command: ['sleep', '99d']
