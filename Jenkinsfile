@@ -38,7 +38,7 @@ spec:
 
     environment {
         PORT           = 5000
-        VERSION        = 'test'
+        VERSION        = 'latest'
         REGISTRY       = 'archieaqua/bubble-b'
         DOCKERHUBCREDS = 'dockerhub-creds'
         DOCKERIMAGE    = ''
