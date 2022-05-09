@@ -6,7 +6,7 @@
 FROM openjdk:8-jdk-alpine
 
 # Copy the JAR from the target folder into the container
-COPY /target/Bubble.jar Bubble.jar 
+COPY target/Bubble.jar Bubble.jar 
 
 EXPOSE 5000
 
