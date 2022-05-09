@@ -119,7 +119,6 @@ volumes:
         // }
 
         stage('Create Image') {
-                  git 'https://github.com/jenkinsci/docker-inbound-agent.git
             steps {
                 container('docker'){
                 script{
