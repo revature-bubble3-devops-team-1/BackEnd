@@ -40,7 +40,7 @@ spec:
         PORT           = 5000
         VERSION        = 'test'
         REGISTRY       = 'archieaqua/bubble-b'
-        dockerHubCreds = 'dockerhub'
+        DOCKERHUBCREDS = 'dockerhub'
         DOCKERIMAGE    = ''
 
     }
@@ -161,7 +161,7 @@ spec:
                steps {
                    container('docker'){
                    script {
-                       docker.withRegistry('', CREDS){
+                       docker.withRegistry('', DOCKERHUBCREDS){
                            docker.image(VERSION).push()
                        }
                    }
