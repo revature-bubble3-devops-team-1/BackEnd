@@ -17,12 +17,12 @@ spec:
           image: maven:3.5.4-jdk-8-slim
           command: ["tail", "-f", "/dev/null"]
           imagePullPolicy: Always
-        - name: docker-client
-          image: docker:19.03.15
-          command: ['sleep', '99d']
         - name: jnlp
           image: ikenoxamos/jenkins-slave:latest
           workingDir: /home/jenkins
+        - name: docker-client
+          image: docker:19.03.15
+          command: ['sleep', '99d']
           env:
             - name: DOCKER_HOST
             value: tcp://localhost:2375
