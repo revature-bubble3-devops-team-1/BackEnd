@@ -17,9 +17,9 @@ containers:
       image: docker:18.06.1
       command: ["tail", "-f", "/dev/null"]
       imagePullPolicy: Always
-  volumeMounts:
-      - name: cache
-        mountPath: /var/lib/docker.sock
+      volumeMounts:
+        - name: cache
+          mountPath: /var/lib/docker.sock
 volumes:
   - name: cache
     hostPath:
