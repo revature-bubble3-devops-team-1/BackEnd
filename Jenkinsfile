@@ -1,7 +1,6 @@
 pipeline {
     agent {
         kubernetes {
-            label 'docker-in-docker-maven'
             yaml """ 
 apiVersion: v1
 kind: Pod
@@ -112,15 +111,15 @@ volumes:
 // //                 discordSend description: ":axe: *Removed Previous Docker Artifacts*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
 //             }
 //         }
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
+        //     }
+        // }
 
         stage('Create Image') {
             steps {
-                container('docker-client'){
+                container('docker'){
                 script{
 
                 docker.build("${env.REGISTRY}:${env.VERSION}.${env.BUILD_ID}")
@@ -154,7 +153,7 @@ volumes:
         //    }
            stage("Push Image to DockerHub") {
                steps {
-                   container('docker-client'){
+                   container('docker'){
                    script {
                        docker.withRegistry('', CREDS){
                            docker.image(VERSION).push()
