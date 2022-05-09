@@ -40,7 +40,7 @@ volumes:
         PORT           = 5000
         VERSION        = "test"
         REGISTRY       = 'archieaqua/bubble-b'
-        CRED           = "dockerhub-creds"
+        CRED           = "dockerhub"
         DOCKERIMAGE    = ''
 
     }
