@@ -31,12 +31,12 @@ containers:
       volumeMounts:
         - name: docker-sock
           mountPath: /var/run/docker.sock
-    volumes:
-      - name: docker-sock
-        mountPath: /var/run/docker.sock
-      - name: m2
-        persistentVolumeClaim:
-          claimName: m2
+volumes:
+    - name: docker-sock
+      mountPath: /var/run/docker.sock
+    - name: m2
+      persistentVolumeClaim:
+        claimName: m2
 """
     }
 } 
