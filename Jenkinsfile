@@ -2,7 +2,6 @@ pipeline {
     agent {
         kubernetes {
             label 'docker-in-docker-maven'
-            defaultContainer 'docker'
             yaml """ 
 apiVersion: v1
 kind: Pod
@@ -13,17 +12,22 @@ metadata:
       app: docker
 spec:
 containers:
+- name: maven
+  image: maven:latest
+  command: ["tail", "-f", "/dev/null"]
+  imagePullPolicy: Always
 - name: docker
   image: docker:latest
   command: ["tail", "-f", "/dev/null"]
   imagePullPolicy: Always
   volumeMounts:
-      - name: docker
+      - name: docker-sock
         mountPath: /var/run/docker.sock
 volumes:
-  - name: docker
+  - name: docker-sock
     hostPath:
         path: /var/run/docker.sock
+        type: Directory
             """
     }
 } 
