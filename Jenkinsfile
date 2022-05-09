@@ -24,7 +24,7 @@ containers:
         - name: docker-socket
           mountPath: /var/run
     - name: docker-daemon
-      image: docker: 19.03.15-dind
+      image: docker:19.03.15-dind
       securityContext:
         privileged: true
       volumes:
