@@ -6,7 +6,7 @@ apiVersion: v1
 kind: Pod
 metadata:
     name: docker-pod
-    namespace: pipeline
+    namespace:
     labels:
       app: docker
 spec:
@@ -37,7 +37,7 @@ volumes:
     }
 
     environment {
-        PORT           = 8080
+        PORT           = 5000
         VERSION        = "test"
         REGISTRY       = 'archieaqua/bubble-b'
         CRED           = "dockerhub-creds"
