@@ -2,6 +2,7 @@ pipeline {
     agent {
         kubernetes {
             label 'docker-in-docker-maven'
+            defaultContainer 'docker'
             yaml """ 
 apiVersion: v1
 kind: Pod
@@ -12,13 +13,6 @@ metadata:
       app: docker
 spec:
 containers:
-- name: maven
-  image: maven:latest
-  command: ["tail", "-f", "/dev/null"]
-  imagePullPolicy: Always
-- name: jnlp
-  image: ikenoxamos/jenkins-slave:latest
-  workingDir: /home/jenkins
 - name: docker
   image: docker:latest
   command: ['sleep', '99d']
