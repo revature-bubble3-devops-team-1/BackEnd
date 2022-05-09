@@ -27,7 +27,7 @@ volumes:
 } 
 
     tools {
-        maven 'Maven'
+        maven 'maven'
         // 'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
     }
 
