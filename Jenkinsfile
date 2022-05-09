@@ -2,13 +2,12 @@ pipeline {
     agent {
         kubernetes {
             label 'docker-in-docker-maven'
-            defaultContainer 'jnlp'
             yaml """ 
 apiVersion: v1
 kind: Pod
 metadata:
     name: docker-pod
-    namespace:
+    namespace: pipeline
     labels:
       app: docker
 spec:
@@ -34,12 +33,12 @@ containers:
   securityContext:
     privileged: true
   volumeMounts:
-      - name: cache
-        mountPath: /var/lib/docker
+      - name: docker-sock
+        mountPath: /var/run/docker.sock
 volumes:
-  - name: cache
+  - name: docker-sock
     hostPath:
-        path: /tmp
+        path: /var/run/docker.sock
         type: Directory
             """
     }
