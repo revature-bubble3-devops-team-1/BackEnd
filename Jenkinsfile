@@ -14,8 +14,8 @@ containers:
       imagePullPolicy: Always
       volumeMounts:
         - name: docker
-          mountPath: /var/run/docker.sock # We use the k8s host docker engine
-  volumes:
+          mountPath: /var/run/docker.sock
+volumes:
     - name: docker
       hostPath:
         path: /var/run/docker.sock
