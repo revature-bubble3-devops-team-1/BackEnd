@@ -6,26 +6,24 @@ pipeline {
             yaml """ 
 apiVersion: v1
 kind: Pod
+metadata:
+    name: docker-pod
+    namespace: pipeline
+    labels:
+      app: docker
 spec:
 containers:
 - name: docker
   image: docker:latest
-  command: ['sleep', '99d']
-  env:
-    - name: DOCKER_HOST
-      value: tcp://localhost:2375
-- name: docker-daemon
-  image: docker:latest
-  securityContext:
-    privileged: true
+  command: ["tail", "-f", "/dev/null"]
+  imagePullPolicy: Always
   volumeMounts:
-      - name: docker-sock
+      - name: docker
         mountPath: /var/run/docker.sock
 volumes:
-  - name: docker-sock
+  - name: docker
     hostPath:
         path: /var/run/docker.sock
-        type: Directory
             """
     }
 } 
