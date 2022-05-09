@@ -111,11 +111,11 @@ volumes:
 // //                 discordSend description: ":axe: *Removed Previous Docker Artifacts*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
 //             }
 //         }
-        // stage('Checkout') {
-        //     steps {
-        //         git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
-        //     }
-        // }
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
+            }
+        }
 
         stage('Create Image') {
             steps {
