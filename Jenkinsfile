@@ -1,7 +1,7 @@
 pipeline {
     agent {
         kubernetes {
-            yaml """ 
+            yaml '''
 apiVersion: v1
 kind: Pod
 metadata:
@@ -30,7 +30,7 @@ containers:
       volumes:
       - name: docker-socket
         mountPath: /var/run
-"""
+'''
     }
 } 
 
