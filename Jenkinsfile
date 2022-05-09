@@ -12,17 +12,18 @@ metadata:
 spec:
 containers:
     - name: docker
-      image: docker:18.06.1
-      command: ["tail", "-f", "/dev/null"]
-      imagePullPolicy: Always
+      image: docker:19.03.15
+      command:
+      - sleep
+      args:
+      -99d
       volumeMounts:
-        - name: docker
+        - name: dockersock
           mountPath: /var/run/docker.sock
 volumes:
-  - name: docker
+  - name: dockersock
     hostPath:
         path: /var/run/docker.sock
-        type: Directory
 """
     }
 } 
@@ -111,13 +112,14 @@ volumes:
 // //                 discordSend description: ":axe: *Removed Previous Docker Artifacts*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
 //             }
 //         }
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
+        //     }
+        // }
 
         stage('Create Image') {
+                  git 'https://github.com/jenkinsci/docker-inbound-agent.git
             steps {
                 container('docker'){
                 script{
