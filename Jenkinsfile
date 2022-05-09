@@ -39,7 +39,7 @@ spec:
     environment {
         PORT           = 5000
         VERSION        = 'latest'
-        REGISTRY       = 'archieaqua/bubble-b'
+        REGISTRY       = 'archieaqua/bubble-f'
         DOCKERHUBCREDS = 'dockerhub-creds'
         DOCKERIMAGE    = ''
 
@@ -162,7 +162,7 @@ spec:
                    container('docker'){
                    script {
                        docker.withRegistry('', DOCKERHUBCREDS){
-                           docker.image().push(VERSION)
+                           docker.image(REGISTRY).push(VERSION)
                        }
                    }
                }
