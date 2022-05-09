@@ -35,7 +35,7 @@ spec:
             privileged: true
     volumeMounts:
         - name: cache
-            mountPath: /var/lib/docker
+        mountPath: /var/lib/docker
     volumes:
     - name: cache
         hostPath:
