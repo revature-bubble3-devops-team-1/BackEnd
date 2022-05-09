@@ -16,10 +16,10 @@ containers:
   command: ["tail", "-f", "/dev/null"]
   imagePullPolicy: Always
   volumeMounts:
-      - name: docker-sock
+      - name: docker
         mountPath: /var/run/docker.sock
 volumes:
-  - name: docker-sock
+  - name: docker
     hostPath:
         path: /var/run/docker.sock
             """
@@ -37,7 +37,7 @@ volumes:
     }
 
     environment {
-        PORT           = 5000
+        PORT           = 8080
         VERSION        = "test"
         REGISTRY       = 'archieaqua/bubble-b'
         CRED           = "dockerhub-creds"
