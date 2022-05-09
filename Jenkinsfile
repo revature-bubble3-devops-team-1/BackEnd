@@ -2,7 +2,6 @@ pipeline {
     agent {
         kubernetes {
             label 'docker-in-docker-maven'
-            defaultContainer 'maven'
             yaml """ 
 apiVersion: v1
 kind: Pod
