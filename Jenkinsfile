@@ -120,7 +120,7 @@ volumes:
 
         stage('Create Image') {
             steps {
-                container('docker'){
+                container('docker-pod'){
                 script{
 
                 docker.build("${env.REGISTRY}:${env.VERSION}.${env.BUILD_ID}")
