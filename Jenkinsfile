@@ -151,17 +151,17 @@ volumes:
         //            }
         //        }
         //    }
-           stage("Push Image to DockerHub") {
-               steps {
-                   container('docker'){
-                   script {
-                       docker.withRegistry('', CREDS){
-                           docker.image(VERSION).push()
-                       }
-                   }
-               }
-           }
-        }
+        //    stage("Push Image to DockerHub") {
+        //        steps {
+        //            container('docker'){
+        //            script {
+        //                docker.withRegistry('', CREDS){
+        //                    docker.image(VERSION).push()
+        //                }
+        //            }
+        //        }
+        //    }
+        // }
     //        stage("create kubeconfig file"){
 
     //        }
