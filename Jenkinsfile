@@ -19,7 +19,7 @@ containers:
 - name: jnlp
   image: ikenoxamos/jenkins-slave:latest
   workingDir: /home/jenkins
-- name: docker-client
+- name: docker
   image: docker:latest
   command: ['sleep', '99d']
   env:
