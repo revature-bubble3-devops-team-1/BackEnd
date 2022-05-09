@@ -57,6 +57,7 @@ volumes:
         REGISTRY       = 'archieaqua/bubble-b'
         CRED           = "dockerhub-creds"
         DOCKERIMAGE    = ''
+        JENKINS_URL    = "http://a5ba22aaea8824601abe69d1c6a1e3d6-802159452.us-east-1.elb.amazonaws.com:8080/job/BackEnd"
 
     }
 
