@@ -12,13 +12,13 @@ metadata:
 spec:
   containers:
     - name: docker
-    image: docker:18.06.1
-    command: ["tail", "-f", "/dev/null"]
-    imagePullPolicy: Always
-    volumeMounts:
-      - name: docker
-        mountPath: /var/run/docker.sock
-volumes:
+      image: docker:18.06.1
+      command: ["tail", "-f", "/dev/null"]
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: docker
+          mountPath: /var/run/docker.sock
+  volumes:
   - name: docker
     hostPath:
       path: /var/run/docker.sock
