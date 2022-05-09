@@ -1,7 +1,6 @@
 pipeline {
     agent {
         kubernetes {
-            label 'docker-in-docker-maven'
             yaml """ 
 apiVersion: v1
 kind: Pod
@@ -12,12 +11,8 @@ metadata:
       app: docker
 spec:
 containers:
-- name: maven
-  image: maven:latest
-  command: ["tail", "-f", "/dev/null"]
-  imagePullPolicy: Always
 - name: docker
-  image: docker:latest
+  image: docker:18.06.1
   command: ["tail", "-f", "/dev/null"]
   imagePullPolicy: Always
   volumeMounts:
@@ -32,7 +27,7 @@ volumes:
 } 
 
     tools {
-        maven 'maven'
+        maven 'Maven'
         // 'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
     }
 
