@@ -33,11 +33,11 @@ spec:
           value: ""
           securityContext:
             privileged: true
-    volumeMounts:
+        volumeMounts:
         - name: cache
         mountPath: /var/lib/docker
-    volumes:
-    - name: cache
+        volumes:
+        - name: cache
         hostPath:
         path: /tmp
         type: Directory
