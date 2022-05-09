@@ -1,8 +1,9 @@
 pipeline {
     agent {
         kubernetes {
-            defaultContainer 'docker'
-            yaml """
+            label 'docker-in-docker-maven'
+            defaultContainer 'jnlp'
+            yaml """ 
 apiVersion: v1
 kind: Pod
 metadata:
@@ -12,39 +13,42 @@ metadata:
       app: docker
 spec:
 containers:
-    - name: maven
-      image: maven:latest
-      command:
-      - cat
-      tty: true 
-      volumeMounts:
-        - mountPath: "root/.m2"
-          name: m2
-    - name: docker
-      image: docker:latest
-      command:
-      - sleep
-      args:
-      - 99d
-      tty: true
-      volumeMounts:
-        - name: docker-sock
-          mountPath: /var/run/docker.sock
+- name: maven
+  image: maven:3.5.4-jdk-8-slim
+  command: ["tail", "-f", "/dev/null"]
+  imagePullPolicy: Always
+- name: jnlp
+  image: ikenoxamos/jenkins-slave:latest
+  workingDir: /home/jenkins
+- name: docker-client
+  image: docker:19.03.15
+  command: ['sleep', '99d']
+  env:
+    - name: DOCKER_HOST
+      value: tcp://localhost:2375
+- name: docker-daemon
+  image: docker:19.03.15-dind
+  env:
+    - name: DOCKER_TLS_CERTDIR
+      value: ""
+  securityContext:
+    privileged: true
+  volumeMounts:
+      - name: cache
+        mountPath: /var/lib/docker
 volumes:
-    - name: docker-sock
-      hostPath:
-        path: /var/run/docker.sock
-    - name: m2
-      persistentVolumeClaim:
-        claimName: m2
-"""
+  - name: cache
+    hostPath:
+        path: /tmp
+        type: Directory
+            """
     }
 } 
 
-    // tools {
-    //     maven 'maven'
-    //     // 'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
-    // }
+    tools {
+        maven 'maven'
+        // 'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
+    }
 
     options {
         buildDiscarder(logRotator(daysToKeepStr: '7', numToKeepStr: '1'))
@@ -57,7 +61,6 @@ volumes:
         REGISTRY       = 'archieaqua/bubble-b'
         CRED           = "dockerhub-creds"
         DOCKERIMAGE    = ''
-        JENKINS_URL    = "http://a5ba22aaea8824601abe69d1c6a1e3d6-802159452.us-east-1.elb.amazonaws.com:8080/job/BackEnd"
 
     }
 
@@ -72,11 +75,9 @@ volumes:
 
         stage('Clean & Package Directory') {
             steps {
-                container('maven'){
                 sh 'mvn clean'
 //                 discordSend description: ":soap: *Cleaned ${env.JOB_NAME}*", result: currentBuild.currentResult,
 //                 webhookURL: env.WEBHO_BE
-                }
             }
         }
 //         stage('Run Tests') {
@@ -88,10 +89,8 @@ volumes:
 //         }
         stage('Package Jar') {
             steps {
-                container('maven'){
                 sh 'mvn -DskipTests package'
 //                 discordSend description: ":package: *Packaged ${env.JOB_NAME}*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
-                }
             }
         }
         // stage('SonarCloud') {
@@ -130,15 +129,15 @@ volumes:
 // //                 discordSend description: ":axe: *Removed Previous Docker Artifacts*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
 //             }
 //         }
-        // stage('Checkout') {
-        //     steps {
-        //         git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
-        //     }
-        // }
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/jenkinsci/docker-jnlp-slave.git'
+            }
+        }
 
         stage('Create Image') {
             steps {
-                container('docker'){
+                container('docker-client'){
                 script{
 
                 docker.build("${env.REGISTRY}:${env.VERSION}.${env.BUILD_ID}")
@@ -170,17 +169,17 @@ volumes:
         //            }
         //        }
         //    }
-        //    stage("Push Image to DockerHub") {
-        //        steps {
-        //            container('docker'){
-        //            script {
-        //                docker.withRegistry('', CREDS){
-        //                    docker.image(VERSION).push()
-        //                }
-        //            }
-        //        }
-        //    }
-        // }
+           stage("Push Image to DockerHub") {
+               steps {
+                   container('docker-client'){
+                   script {
+                       docker.withRegistry('', CREDS){
+                           docker.image(VERSION).push()
+                       }
+                   }
+               }
+           }
+        }
     //        stage("create kubeconfig file"){
 
     //        }
