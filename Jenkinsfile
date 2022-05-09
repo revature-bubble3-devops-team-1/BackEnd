@@ -24,6 +24,7 @@ volumes:
         path: /var/run/docker.sock
         type: Directory
 """
+        defaultContainer 'maven'
     }
 } 
 
