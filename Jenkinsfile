@@ -40,7 +40,7 @@ spec:
         PORT           = 5000
         VERSION        = 'test'
         REGISTRY       = 'archieaqua/bubble-b'
-        CRED           = 'dockerhub-creds'
+        dockerHubCreds = 'dockerhub'
         DOCKERIMAGE    = ''
 
     }
