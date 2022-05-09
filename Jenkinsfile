@@ -168,7 +168,14 @@ volumes:
         //            }
         //        }
         //    }
-           stage("Push Image to DockerHub") {
+            stage('Login-Into-Docker') {
+            steps {
+                container('docker') {
+                sh 'docker login -u <CREDS_username> -p <CREDS_password>'
+            }
+        }
+    }
+            stage("Push Image to DockerHub") {
                steps {
                    container('docker'){
                    script {
