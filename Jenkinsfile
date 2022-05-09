@@ -13,29 +13,13 @@ metadata:
       app: docker
 spec:
 containers:
-- name: maven
-  image: maven:3.5.4-jdk-8-slim
-  command: ["tail", "-f", "/dev/null"]
-  imagePullPolicy: Always
-- name: jnlp
-  image: ikenoxamos/jenkins-slave:latest
-  workingDir: /home/jenkins
-- name: docker-client
-  image: docker:19.03.15
-  command: ['sleep', '99d']
-  env:
-    - name: DOCKER_HOST
-      value: tcp://localhost:2375
-- name: docker-daemon
-  image: docker:19.03.15-dind
-  env:
-    - name: DOCKER_TLS_CERTDIR
-      value: ""
-  securityContext:
-    privileged: true
+    - name: docker
+      image: docker:18.06.1
+      command: ["tail", "-f", "/dev/null"]
+      imagePullPolicy: Always
   volumeMounts:
       - name: cache
-        mountPath: /var/lib/docker
+        mountPath: /var/lib/docker.sock
 volumes:
   - name: cache
     hostPath:
