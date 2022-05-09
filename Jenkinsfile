@@ -1,6 +1,7 @@
 pipeline {
     agent {
         kubernetes {
+            defaultContainer 'maven'
             yaml """ 
 apiVersion: v1
 kind: Pod
@@ -24,7 +25,6 @@ volumes:
         path: /var/run/docker.sock
         type: Directory
 """
-        defaultContainer 'maven'
     }
 } 
 
