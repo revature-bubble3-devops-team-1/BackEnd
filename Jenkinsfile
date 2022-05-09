@@ -16,10 +16,10 @@ containers:
       command: ["tail", "-f", "/dev/null"]
       imagePullPolicy: Always
       volumeMounts:
-        - name: cache
-          mountPath: /var/lib/docker.sock
+        - name: docker
+          mountPath: /var/run/docker.sock
 volumes:
-  - name: cache
+  - name: docker
     hostPath:
         path: /var/run/docker.sock
         type: Directory
