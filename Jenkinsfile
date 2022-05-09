@@ -8,31 +8,17 @@ apiVersion: v1
 kind: Pod
 spec:
 containers:
-- name: docker-client
-  image: docker:19.03.15
-  command: ['sleep', '99d']
-- name: jnlp
-  image: ikenoxamos/jenkins-slave:latest
-  workingDir: /home/jenkins
-  env:
-    - name: DOCKER_HOST
-      value: tcp://localhost:2375
-- name: docker-daemon
-  image: docker:19.03.15-dind
-  env:
-    - name: DOCKER_TLS_CERTDIR
-      value: ""
-  securityContext:
-    privileged: true
-  volumeMounts:
-      - name: cache
-        mountPath: /var/lib/docker
-volumes:
-  - name: cache
-    hostPath:
-      path: /tmp
-      type: Directory
-        """
+    - name: docker
+      image: docker:18.06.1
+      command: ["tail", "-f", "/dev/null"]
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: docker
+          mountPath: /var/run/docker.sock # We use the k8s host docker engine
+  volumes:
+    - name: docker
+      hostPath:
+        path: /var/run/docker.sock
     }
 } 
 
