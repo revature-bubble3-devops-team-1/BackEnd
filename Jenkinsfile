@@ -21,7 +21,7 @@ containers:
 volumes:
   - name: docker
     hostPath:
-        path: /var/run/docker.sock
+      path: /var/run/docker.sock
             """
     }
 } 
