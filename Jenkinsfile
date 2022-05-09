@@ -10,6 +10,9 @@ metadata:
     labels:
       app: docker
 spec:
+volumes:
+- name: docker-socket
+  emptyDir: {}
 containers:
     - name: docker
       image: docker:19.03.15
@@ -18,12 +21,15 @@ containers:
       args:
       - 99d
       volumeMounts:
-        - name: dockersock
-          mountPath: /var/run/docker.sock
-volumes:
-  - name: dockersock
-    hostPath:
-        path: /var/run/docker.sock
+        - name: docker-socket
+          mountPath: /var/run
+    - name: docker-daemon
+      image: docker: 19.03.15-dind
+      securityContext:
+        privileged: true
+      volumes:
+      - name: docker-socket
+        mountPath: /var/run
 """
     }
 } 
@@ -120,7 +126,7 @@ volumes:
 
         stage('Create Image') {
             steps {
-                container('docker-pod'){
+                container('docker'){
                 script{
 
                 docker.build("${env.REGISTRY}:${env.VERSION}.${env.BUILD_ID}")
