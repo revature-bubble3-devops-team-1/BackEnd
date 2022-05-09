@@ -25,12 +25,12 @@ spec:
           command: ['sleep', '99d']
           env:
             - name: DOCKER_HOST
-            value: tcp://localhost:2375
+              value: tcp://localhost:2375
         - name: docker-daemon
-          image: docker:19.03.15-dind
+            image: docker:19.03.15-dind
           env:
-            - name: DOCKER_TLS_CERTDIR
-            value: ""
+        - name: DOCKER_TLS_CERTDIR
+          value: ""
           securityContext:
             privileged: true
     volumeMounts:
