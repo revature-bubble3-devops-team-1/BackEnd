@@ -16,7 +16,7 @@ containers:
       command:
       - sleep
       args:
-      -99d
+      - 99d
       volumeMounts:
         - name: dockersock
           mountPath: /var/run/docker.sock
