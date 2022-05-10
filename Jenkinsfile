@@ -23,6 +23,12 @@ spec:
   - name: docker
     hostPath:
       path: /var/run/docker.sock
+  resources:
+  - name: kubectl
+  image: jshimko/kube-tools-aws:latest
+  command:
+  - cat
+  tty: true
 """
     }
 } 
