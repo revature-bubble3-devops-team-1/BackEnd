@@ -1,6 +1,6 @@
 package com.revature.aspects;
 
-import lombok.extern.log4j.Log4j2;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.servlet.http.HttpServletRequest;
 
-@Log4j2
+@Slf4j
 @Aspect
 @Component
 public class LoggerAspect {

@@ -1,11 +1,13 @@
 package com.revature.controllers;
 
 import java.util.LinkedList;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.jboss.logging.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,9 +27,9 @@ import com.revature.models.Profile;
 import com.revature.services.ProfileService;
 import com.revature.utilites.SecurityUtil;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j2
+@Slf4j
 @RestController
 @RequestMapping("/profile")
 @CrossOrigin
@@ -204,6 +206,7 @@ public class ProfileController {
                 pro.setEmail(follower.getEmail());
 
                 log.info("Profile successfully unfollowed");
+                MDC.put("Email ", email);
                 HttpHeaders headers = new HttpHeaders();
                 String newToken = SecurityUtil.generateToken(new ProfileDTO(pro));
                 String body = "{\"Authorization\":\"" +
@@ -240,6 +243,7 @@ public class ProfileController {
     @GetMapping("/search/{query}")
     public ResponseEntity<List<ProfileDTO>> search(@PathVariable("query") String query){
         log.info("/search hit");
+        MDC.put("Endpoint ", query);
         List<Profile> profiles = profileService.search(query);
         List<ProfileDTO> profileDtos = new LinkedList<>();
         profiles.forEach(p -> profileDtos.add(new ProfileDTO(p)));
