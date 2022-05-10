@@ -6,8 +6,13 @@ spring:
     username:  ${DB_USER}
     password: ${DB_PASS}
   jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        generate_statistics: true
   mail:
     properties:
       mail:
@@ -19,7 +24,15 @@ spring:
           connectiontimeout: '5000'
           writetimeout: '5000'
     host: smtp.gmail.com
-    username: bubbleatrevature@gmail.com
-    password: R3Vature!
+    username: ${MAIL_ADDR}
+    password: ${MAIL_PASS}
     port: '587'
-    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+  metrics:
+    distribution:
+      percentiles-histogram.http.server.requests: true
+      percentiles.http.server.requests: 0.5, 0.9, 0.95, 0.99, 0.999

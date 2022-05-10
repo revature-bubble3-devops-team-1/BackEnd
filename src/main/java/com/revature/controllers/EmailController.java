@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.mail.MessagingException;
 
 import org.jboss.logging.MDC;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import com.revature.services.EmailService;
 import com.revature.services.ProfileServiceImpl;
 
 import freemarker.template.TemplateException;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -44,16 +46,18 @@ public class EmailController {
 	@PostMapping("/verfied/email")
 	public boolean sendEmail(@RequestBody Map<?,?> emailMap) {
 		log.info("In Email Controller -----------------------");
+		MDC.put("Endoint ", (String) emailMap.get(URL));
 		HashMap<String, Object> tempMap = new HashMap<>();
 		tempMap.put(EMAIL, emailMap.get(EMAIL));
 		log.info((String) emailMap.get(EMAIL));
+
 		MDC.put("Email ", emailMap.get(EMAIL)); 
 		tempMap.put(URL, emailMap.get(URL));
 
 		Profile emailProfile = new Profile();
 		emailProfile.setEmail((String) emailMap.get(EMAIL));
 		Profile profile = pserv.getProfileByEmail(emailProfile);
-//		log.info(profile);
+
 		MDC.put("profile ", profile); 
 		tempMap.put("profile", profile);
 
@@ -75,6 +79,7 @@ public class EmailController {
 	public boolean emailVerified(@RequestBody String email) {
 		log.info("in validate---------------------");
 		log.info(EMAIL + ": " + email);
+
 		MDC.put("Email ", email);
 		Profile profile = new Profile();
 		profile.setEmail(email);
