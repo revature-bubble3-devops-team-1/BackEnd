@@ -12,12 +12,15 @@ metadata:
 spec:
   containers:
     - name: docker
-      image: docker:18.06.1
+      image: docker:latest
       command: ["tail", "-f", "/dev/null"]
       imagePullPolicy: Always
       volumeMounts:
         - name: docker
           mountPath: /var/run/docker.sock
+    - name: node.js
+      image: node:latest
+      imagePullPolicy: Always
   volumes:
   - name: docker
     hostPath:
