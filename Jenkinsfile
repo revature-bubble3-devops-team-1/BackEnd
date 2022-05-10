@@ -24,6 +24,9 @@ spec:
       image: pipelines-awscli:latest
       command: ["tail", "-f", "/dev/null"]
       imagePullPolicy: Always
+      volumeMounts:
+        - name: pipelines
+          mountPath: /var/run/docker.sock
   volumes:
   - name: docker
     hostPath:
