@@ -185,7 +185,6 @@ spec:
                     }
                 }
             }
-        }
 
         //    stage("Redirect service to blue container"){
 
@@ -310,4 +309,5 @@ spec:
                     }
                 }
             }
+    }
 }
