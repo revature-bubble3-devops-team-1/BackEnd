@@ -306,7 +306,6 @@ spec:
                 steps{
                 container('kubectl'){
                     script{
-                        container('kubectl') {
                         withKubeConfig([credentialsId: 'kube-config']) {
                           sh "aws eks update-kubeconfig --name team-aqua-mx2ESgug --region us-east-1 "
                           sh 'kubectl get pods'
