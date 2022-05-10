@@ -1,0 +1,33 @@
+version: "2.3.3"
+
+services:
+  bubble:
+    build: .
+    image: bubble
+    ports:
+      - 5000:5000
+    environment:
+      - DB_URL=jdbc:postgresql://postgres:5432/postgres
+      - DB_USER=postgres
+      - DB_PASS=pass
+      - MAIL_ADDR=rev.team.aqua@gmail.com
+      - MAIL_PASS=aquapass
+    container_name: bubble-app
+    depends_on:
+      - postgres
+    volumes:
+      - ./logs/application.log:/logs/application.log
+      # IF THE FILE DOES NOT ALREADY EXIST, A FOLDER OF THAT NAME MIGHT BE CREATED
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=pass
+    container_name: bubble-db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
+    driver: local
