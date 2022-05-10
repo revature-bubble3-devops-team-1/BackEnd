@@ -20,6 +20,7 @@ spec:
           mountPath: /var/run/docker.sock
     - name: node-js
       image: node:latest
+      command: ["tail", "-f", "/dev/null"]
       imagePullPolicy: Always
   volumes:
   - name: docker
