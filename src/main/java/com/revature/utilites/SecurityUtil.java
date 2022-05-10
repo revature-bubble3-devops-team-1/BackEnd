@@ -1,5 +1,6 @@
 package com.revature.utilites;
 import java.security.KeyFactory;
+
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -31,7 +32,6 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.revature.dto.ProfileDTO;
 import com.revature.models.Profile;
 
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

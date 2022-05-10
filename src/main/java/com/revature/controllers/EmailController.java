@@ -1,12 +1,14 @@
 package com.revature.controllers;
 
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.mail.MessagingException;
 
-import org.slf4j.MDC;
+import org.jboss.logging.MDC;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ import com.revature.services.EmailService;
 import com.revature.services.ProfileServiceImpl;
 
 import freemarker.template.TemplateException;
-import lombok.extern.log4j.Log4j2;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -48,13 +50,15 @@ public class EmailController {
 		HashMap<String, Object> tempMap = new HashMap<>();
 		tempMap.put(EMAIL, emailMap.get(EMAIL));
 		log.info((String) emailMap.get(EMAIL));
-		MDC.put("Email ", (String) emailMap.get(EMAIL));
+
+		MDC.put("Email ", emailMap.get(EMAIL)); 
 		tempMap.put(URL, emailMap.get(URL));
 
 		Profile emailProfile = new Profile();
 		emailProfile.setEmail((String) emailMap.get(EMAIL));
 		Profile profile = pserv.getProfileByEmail(emailProfile);
-		//log.info(profile);
+
+		MDC.put("profile ", profile); 
 		tempMap.put("profile", profile);
 
 		try {
@@ -75,7 +79,9 @@ public class EmailController {
 	public boolean emailVerified(@RequestBody String email) {
 		log.info("in validate---------------------");
 		log.info(EMAIL + ": " + email);
-		MDC.put("Email ", email);		Profile profile = new Profile();
+
+		MDC.put("Email ", email);
+		Profile profile = new Profile();
 		profile.setEmail(email);
 
 		Profile prof = pserv.getProfileByEmail(profile);
