@@ -28,7 +28,6 @@ spec:
 
     tools {
         maven 'maven'
-        jdk 'jdk' //
         // 'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
     }
 
