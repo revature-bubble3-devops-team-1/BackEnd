@@ -20,7 +20,7 @@ spec:
         - name: docker
           mountPath: /var/run/docker.sock
     - name: kubectl
-      image: bitnami/kubectl:latest
+      image: jshimko/kube-tools-aws:latest
       command:
       - cat
       tty: true
