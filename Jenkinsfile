@@ -54,6 +54,11 @@ spec:
         //         }
         //     }
         // }
+        stage('Dependecy download') {
+            steps {
+                sh 'npm install'
+            }
+        }
 
         stage('Clean & Package Directory') {
             steps {
@@ -169,6 +174,9 @@ spec:
                }
            }
         }
+        //Determine whether we want blue or green deployment by default
+        // Determine when conditions will switch from blue to green and v-v
+        //Deploy image depending on the current branch
     //        stage("create kubeconfig file"){
 
     //        }
