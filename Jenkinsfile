@@ -24,10 +24,10 @@ spec:
       command:
       - cat
       tty: true
-    volumes:
-    - name: docker
-    hostPath:
-      path: /var/run/docker.sock
+  volumes:
+  - name: docker
+  hostPath:
+    path: /var/run/docker.sock
 
 """
     }
