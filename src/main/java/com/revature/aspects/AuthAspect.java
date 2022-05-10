@@ -3,6 +3,8 @@ package com.revature.aspects;
 import com.revature.models.Profile;
 import com.revature.utilites.SecurityUtil;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
@@ -18,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 @Aspect
-@Log4j2
+@Slf4j
 @Component
 public class AuthAspect {
     public AuthAspect() {

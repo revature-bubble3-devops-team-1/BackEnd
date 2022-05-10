@@ -22,8 +22,9 @@ import com.revature.services.ProfileServiceImpl;
 
 import freemarker.template.TemplateException;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j2
+@Slf4j
 @RestController
 @CrossOrigin
 public class EmailController {
@@ -50,7 +51,7 @@ public class EmailController {
 		Profile emailProfile = new Profile();
 		emailProfile.setEmail((String) emailMap.get(EMAIL));
 		Profile profile = pserv.getProfileByEmail(emailProfile);
-		log.info(profile);
+		//log.info(profile);
 		tempMap.put("profile", profile);
 
 		try {

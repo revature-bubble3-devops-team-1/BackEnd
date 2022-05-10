@@ -26,8 +26,9 @@ import com.revature.services.ProfileService;
 import com.revature.utilites.SecurityUtil;
 
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j2
+@Slf4j
 @RestController
 @RequestMapping("/profile")
 @CrossOrigin
