@@ -26,11 +26,11 @@ spec:
       limits:
         memory: "500Mi"
         cpu: "0.5"
-    - name: kubectl
-      image: jshimko/kube-tools-aws:latest
-      command:
-      - cat
-      tty: true
+  - name: kubectl
+    image: jshimko/kube-tools-aws:latest
+    command:
+    - cat
+    tty: true
   volumes:
   - name: docker
     hostPath:
