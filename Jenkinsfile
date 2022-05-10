@@ -309,7 +309,7 @@ spec:
                           sh "aws eks update-kubeconfig --name team-aqua-mx2ESgug --region us-east-1 "
                           sh 'kubectl get pods'
                           // The syntax below might be slightly off
-                          sh "kubectl set image patch deployment deployment-name=$REGISTRY:$VERSION"
+                          sh "kubectl set image deployment $REGIISTRY $REGISTRY:$VERSION"
                         // withAWS(credentials: 'aws-creds', region: 'us-east-1'){
                         // //  sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
                         // //  sh 'chmod u+x .kubectl'
