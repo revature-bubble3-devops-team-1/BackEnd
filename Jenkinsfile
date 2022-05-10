@@ -19,6 +19,11 @@ spec:
       volumeMounts:
         - name: docker
           mountPath: /var/run/docker.sock
+  containers:
+    - name: aws-cli
+      image: aws-cli:latest
+      command: ["tail", "-f", "/dev/null"]
+      imagePullPolicy: Always
   volumes:
   - name: docker
     hostPath:
