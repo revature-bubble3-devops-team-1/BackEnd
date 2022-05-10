@@ -301,27 +301,48 @@ spec:
 //             sh 'docker container ls'
 //         }
 //     }
-            stage("Deploy to Production"){
-                steps{
+            // stage("Deploy to Production"){
+            //     steps{
+            //     container('kubectl'){
+            //         script{
+            //             withKubeConfig([credentialsId: 'kube-config']) {
+            //               sh "aws eks update-kubeconfig --name team-aqua-mx2ESgug --region us-east-1 "
+            //               sh 'kubectl get pods'
+            //               // The syntax below might be slightly off
+            //               sh "kubectl patch deployment deployment-name --set-image=$REGISTRY:$VERSION"
+            //             // withAWS(credentials: 'aws-creds', region: 'us-east-1'){
+            //             // //  sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
+            //             // //  sh 'chmod u+x .kubectl'
+            //             //  sh "aws configure --profile 220307-kevin-sre-team-aqua --aws_access_key_id "
+            //             //  sh "aws eks update-kubeconfig --profile 220307-kevin-sre-team-aqua --name  arn:aws:eks:us-east-1:855430746673:cluster/team-aqua-mx2ESgug --region us-east-1"
+            //             //  sh "./kubectl get pods -n backend"
+            //             //  sh "echo $registry:$currentBuild.number"
+            //             //  sh "./kubectl set image -n backend deployment.apps/backend backend-container=$registry:$currentBuild.number"
+            //             }
+            //           }
+            //         }
+            //     }
+            // }
+
+            stage('Set eks use'){
+            steps{
                 container('kubectl'){
                     script{
-                        withKubeConfig([credentialsId: 'kube-config']) {
-                          sh "aws eks update-kubeconfig --name team-aqua-mx2ESgug --region us-east-1 "
-                          sh 'kubectl get pods'
-                          // The syntax below might be slightly off
-                          sh "kubectl patch deployment deployment-name --set-image=$REGISTRY:$VERSION"
-                        // withAWS(credentials: 'aws-creds', region: 'us-east-1'){
-                        // //  sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
-                        // //  sh 'chmod u+x .kubectl'
-                        //  sh "aws configure --profile 220307-kevin-sre-team-aqua --aws_access_key_id "
-                        //  sh "aws eks update-kubeconfig --profile 220307-kevin-sre-team-aqua --name  arn:aws:eks:us-east-1:855430746673:cluster/team-aqua-mx2ESgug --region us-east-1"
-                        //  sh "./kubectl get pods -n backend"
-                        //  sh "echo $registry:$currentBuild.number"
-                        //  sh "./kubectl set image -n backend deployment.apps/backend backend-container=$registry:$currentBuild.number"
+                        withAWS(credentials:'aws-creds', region:'us-east-1'){
+                            sh 'aws eks update-kubeconfig --name team-aqua-mx2ESgug'
                         }
-                      }
                     }
                 }
             }
+        }//end stage
+            stage('Create the service in kubernetes cluster traffic to black deployment') {
+			steps {
+                container ('kubectl') {
+				    withAWS(credentials:'aws-creds', region:'us-east-1') {
+					    sh 'kubectl apply -f ./deployment/kubernetes/black-backend-service.yml -n team-magma'
+				    }
+                }
+			}
+		}//end stage
     }
  }
