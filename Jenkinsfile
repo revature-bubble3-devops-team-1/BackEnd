@@ -29,7 +29,7 @@ spec:
       cpu: "0.3"
     limits:
       memory: "500Mi"
-      cpu: "0.5
+      cpu: "0.5"
 - name: kubectl
   image: jshimko/kube-tools-aws:latest
   command:
