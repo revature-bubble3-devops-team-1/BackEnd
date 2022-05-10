@@ -8,7 +8,7 @@ FROM openjdk:8-jdk-alpine as runner
 # Copy the JAR from the target folder into the container
 COPY target/Bubble.jar Bubble.jar 
 
-RUN apk update && apk add curl
+RUN apk --no-cache add curl
 
 EXPOSE 5000
 
