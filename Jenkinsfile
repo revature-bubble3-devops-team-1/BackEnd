@@ -217,41 +217,41 @@ spec:
 
         //        }
         //    }
-        stage('Set kubectl use-context') {
-			steps {
-				withAWS(region:'us-east-1', credentials:'aws-creds') {
-					sh '''
-						kubectl config use-context arn:aws:eks:us-east-1:855430746673:cluster/team-aqua-mx2ESgug
-					'''
-				}
-			}
-		}
-		stage('Blue replication controller') {
-			steps {
-				withAWS(region:'us-east-1', credentials:'aws-creds') {
-					sh '''
-						kubectl apply -f ./bubble-backend-blue-deployment.yml
-					'''
-				}
-			}
-		}
-		stage('Green replication controller') {
-			steps {
-				withAWS(region:'us-east-1', credentials:'aws-creds') {
-					sh '''
-						kubectl apply -f ./bubble-backend-green-deployment.yml
-					'''
-				}
-			}
-		}
-		stage('Create the service in kubernetes cluster traffic to blue controller') {
-			steps {
-				withAWS(region:'us-east-1', credentials:'aws-creds') {
-					sh '''
-						kubectl apply -f ./Kubernetes/bubble-backend-service.yml
-					'''
-				}
-			}
+        // stage('Set kubectl use-context') {
+		// 	steps {
+		// 		withAWS(region:'us-east-1', credentials:'aws-creds') {
+		// 			sh '''
+		// 				kubectl config use-context arn:aws:eks:us-east-1:855430746673:cluster/team-aqua-mx2ESgug
+		// 			'''
+		// 		}
+		// 	}
+		// }
+		// stage('Blue replication controller') {
+		// 	steps {
+		// 		withAWS(region:'us-east-1', credentials:'aws-creds') {
+		// 			sh '''
+		// 				kubectl apply -f ./bubble-backend-blue-deployment.yml
+		// 			'''
+		// 		}
+		// 	}
+		// }
+		// stage('Green replication controller') {
+		// 	steps {
+		// 		withAWS(region:'us-east-1', credentials:'aws-creds') {
+		// 			sh '''
+		// 				kubectl apply -f ./bubble-backend-green-deployment.yml
+		// 			'''
+		// 		}
+		// 	}
+		// }
+		// stage('Create the service in kubernetes cluster traffic to blue controller') {
+		// 	steps {
+		// 		withAWS(region:'us-east-1', credentials:'aws-creds') {
+		// 			sh '''
+		// 				kubectl apply -f ./Kubernetes/bubble-backend-service.yml
+		// 			'''
+		// 		}
+		// 	}
 
     //         stage('User approve to continue') {
     //         steps {
