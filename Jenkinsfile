@@ -18,7 +18,7 @@ spec:
       volumeMounts:
         - name: docker
           mountPath: /var/run/docker.sock
-    - name: node.js
+    - name: node-js
       image: node:latest
       imagePullPolicy: Always
   volumes:
