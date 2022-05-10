@@ -32,8 +32,9 @@ import com.revature.dto.ProfileDTO;
 import com.revature.models.Profile;
 
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j2
+@Slf4j
 public class SecurityUtil {
     private static final int SALT_LENGTH = 512;
     private static final SecureRandom SECURE_RANDOM = new SecureRandom();
