@@ -309,7 +309,7 @@ spec:
                           sh "aws eks update-kubeconfig --name team-aqua-mx2ESgug --region us-east-1 "
                           sh 'kubectl get pods'
                           // The syntax below might be slightly off
-                          sh "sh 'kubectl apply -f ./deployment/kubernetes/blue-backend-service.yml -n team-aqua"
+                          sh 'kubectl apply -f ./Kubernetes/bubble-backend-service.yml'
                         // withAWS(credentials: 'aws-creds', region: 'us-east-1'){
                         // //  sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
                         // //  sh 'chmod u+x .kubectl'
