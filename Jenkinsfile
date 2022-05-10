@@ -19,18 +19,18 @@ spec:
       volumeMounts:
         - name: docker
           mountPath: /var/run/docker.sock
-  resources:
-    requests:
-      memory: "300Mi"
-      cpu: "0.3"
-    limits:
-      memory: "500Mi"
-      cpu: "0.5"
-  - name: kubectl
-    image: jshimko/kube-tools-aws:latest
-    command:
-    - cat
-    tty: true
+    resources:
+      requests:
+        memory: "300Mi"
+        cpu: "0.3"
+      limits:
+        memory: "500Mi"
+        cpu: "0.5"
+    - name: kubectl
+      image: jshimko/kube-tools-aws:latest
+      command:
+      - cat
+      tty: true
   volumes:
   - name: docker
     hostPath:
