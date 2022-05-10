@@ -19,7 +19,7 @@ spec:
       volumeMounts:
         - name: docker
           mountPath: /var/run/docker.sock
-    resources:
+  resources:
       requests:
         memory: "300Mi"
         cpu: "0.3"
