@@ -201,20 +201,20 @@ spec:
 
     //            }
     //        }
-    //        stage("Deploy to Production"){
-    //            steps{
-    //                script{
-    //                    withAWS(credentials: 'aws-creds', region: 'us-east-1'){
-    //                     sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
-    //                     sh 'chmod u+x ./kubectl'
-    //                     sh 'aws eks update-kubeconfig --profile 220307-kevin-sre-team-aqua --name team-aqua-mx2Egug --region us-east-1'
-    //                     sh './kubectl get pods -n backend'
-    //                     sh "echo $registry:$currentBuild.number"
-    //                     sh "./kubectl set image -n backend deployment.apps/backend backend-container=$registry:$currentBuild.number"
-    //                    }
-    //                }
-    //            }
-    //        }
+            stage("Deploy to Production"){
+                steps{
+                    script{
+                        withAWS(credentials: 'aws-creds', region: 'us-east-1'){
+                         sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
+                         sh 'chmod u+x ./kubectl'
+                         sh 'aws eks update-kubeconfig --profile 220307-kevin-sre-team-aqua --name team-aqua-mx2Egug --region us-east-1'
+                         sh './kubectl get pods -n backend'
+                         sh "echo $registry:$currentBuild.number"
+                         sh "./kubectl set image -n backend deployment.apps/backend backend-container=$registry:$currentBuild.number"
+                        }
+                    }
+                }
+            }
     }
 //     post {
 //         failure {
