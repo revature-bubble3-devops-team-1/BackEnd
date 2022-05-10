@@ -53,11 +53,11 @@ spec:
         //         }
         //     }
         // }
-        stage('Dependecy download') {
-            steps {
-                sh 'npm install'
-            }
-        }
+        // stage('Dependecy download') {
+        //     steps {
+        //         sh 'npm install'
+        //     }
+        // }
 
         stage('Clean & Package Directory') {
             steps {
