@@ -185,7 +185,7 @@ spec:
                         container('docker'){
                         script {
                             docker.withRegistry('', DOCKERHUBCREDS){
-                                docker.image(REGISTRY).push(VERSION)
+                                docker.image(REGISTRY).push("$versionNumber.$currentBuild.number")
                             }
                         }
                     }
