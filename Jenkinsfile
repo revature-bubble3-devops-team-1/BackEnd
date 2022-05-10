@@ -339,7 +339,7 @@ spec:
 			steps {
                 container ('kubectl') {
 				    withAWS(credentials:'aws-creds', region:'us-east-1') {
-					    sh 'kubectl apply -f ./deployment/kubernetes/black-backend-service.yml -n team-magma'
+					    sh 'kubectl apply -f ./Kubernetes/bubble-backend-service.yml'
 				    }
                 }
 			}

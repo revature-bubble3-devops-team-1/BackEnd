@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-green
+  # namespace: green
+spec:
+  selector:
+    matchLabels:
+      app: bubble
+      tier: backend
+      color: green
+      track: stable
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bubble
+        tier: backend
+        color: green
+        track: stable
+    spec:
+      nodeSelector:
+        name: w1
+      containers:
+      - name: bubble #bubble-backend-container
+        image: "archieaqua/bubble-b:test.log"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "128m"
+          limits:
+            memory: "512Mi"
+            # cpu: "500m"
+        ports:
+        - name: http
+          containerPort: 5000
+        env:
+          - name: DB_URL
+            valueFrom:
+              secretKeyRef:
+                name: bubble-secret
+                key: db-url
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: bubble-secret
+                key: db-username
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: bubble-secret
+                key: db-password
+          - name: MAIL_ADDR
+            valueFrom:
+              secretKeyRef:
+                name: bubble-secret
+                key: email-address
+          - name: MAIL_PASS
+            valueFrom:
+              secretKeyRef:
+                name: bubble-secret
+                key: email-password
+
