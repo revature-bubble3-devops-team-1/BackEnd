@@ -1,3 +1,4 @@
+@Library('github.com/releaseworks/jenkinslib')
 pipeline {
     agent {
         kubernetes {
@@ -121,17 +122,6 @@ spec:
         //     }
         // }
 
-        stage('Create Image') {
-            steps {
-                container('docker'){
-                script{
-
-                docker.build("${env.REGISTRY}:${env.VERSION}.${env.BUILD_ID}")
-                }
-            }
-//                 discordSend description: ":screwdriver: *Built New Docker Image*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
-        }
-    }
 //         stage('Run Container') {
 //             steps {
 //                 sh 'docker run -d --env DB_URL --env DB_USER --env DB_PASS --rm -p ${PORT}:${PORT} --name ${CONTAINER_NAME} ${IMAGE_TAG} '
@@ -162,68 +152,130 @@ spec:
     //         }
     //     }
     // }
-            stage("Push Image to DockerHub") {
-               steps {
-                   container('docker'){
-                   script {
-                       docker.withRegistry('', DOCKERHUBCREDS){
-                           docker.image(REGISTRY).push(VERSION)
-                       }
-                   }
-               }
-           }
-        }
+           
         //Determine whether we want blue or green deployment by default
         // Determine when conditions will switch from blue to green and v-v
         //Deploy image depending on the current branch
     //        stage("create kubeconfig file"){
 
     //        }
-    //        stage("deploy blue container"){
+           stage("deploy blue container"){
 
-    //            when {branch 'blue'}
-
-    //        }
-    //        stage("Redirect service to blue container"){
-
-    //            when { branch "blue"
-    //            }
-    //            steps{
-
-    //            }    
-    //        }
-    //         stage("deploy green container"){
-
-    //            when {branch 'green'
-    //            }
-    //            steps{
-
-    //            }
-
-    //        }
-    //        stage("Redirect service to green container"){
-
-    //            when { branch "green"
-    //            }
-    //            steps{
-
-    //            }
-    //        }
-            stage("Deploy to Production"){
-                steps{
+               when {branch 'blue'}
+               steps {
+            stage('Create Image') {
+                steps {
+                    container('docker'){
                     script{
-                        withAWS(credentials: 'aws-creds', region: 'us-east-1'){
-                         sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
-                         sh 'chmod u+x ./kubectl'
-                         sh 'aws eks update-kubeconfig --profile 220307-kevin-sre-team-aqua --name team-aqua-mx2Egug --region us-east-1'
-                         sh './kubectl get pods -n backend'
-                         sh "echo $registry:$currentBuild.number"
-                         sh "./kubectl set image -n backend deployment.apps/backend backend-container=$registry:$currentBuild.number"
+
+                    docker.build("${env.REGISTRY}:${env.VERSION}.${env.BUILD_ID}")
+                    }
+                }
+//                 discordSend description: ":screwdriver: *Built New Docker Image*", result: currentBuild.currentResult, webhookURL: env.WEBHO_BE
+            }
+     }
+            stage("Push Image to DockerHub") {
+                    steps {
+                        container('docker'){
+                        script {
+                            docker.withRegistry('', DOCKERHUBCREDS){
+                                docker.image(REGISTRY).push(VERSION)
+                            }
                         }
                     }
                 }
             }
+        }
     }
+    }
+}
+        //    stage("Redirect service to blue container"){
+
+        //        when { branch "blue"
+        //        }
+        //        steps{
+
+        //        }    
+        //    }
+        //     stage("deploy green container"){
+
+        //        when {branch 'green'
+        //        }
+        //        steps{
+
+        //        }
+
+        //    }
+        //    stage("Redirect service to green container"){
+
+        //        when { branch "green"
+        //        }
+        //        steps{
+
+        //        }
+        //    }
+    //     stage('Set kubectl use-context') {
+	// 		steps {
+	// 			withAWS(region:'us-east-1', credentials:'aws-creds') {
+	// 				sh '''
+	// 					kubectl config use-context arn:aws:eks:us-east-1:855430746673:cluster/team-aqua-mx2ESgug
+	// 				'''
+	// 			}
+	// 		}
+	// 	}
+	// 	stage('Blue replication controller') {
+	// 		steps {
+	// 			withAWS(region:'us-east-1', credentials:'aws-creds') {
+	// 				sh '''
+	// 					kubectl apply -f ./bubble-backend-blue-deployment.yml
+	// 				'''
+	// 			}
+	// 		}
+	// 	}
+	// 	stage('Green replication controller') {
+	// 		steps {
+	// 			withAWS(region:'us-east-1', credentials:'aws-creds') {
+	// 				sh '''
+	// 					kubectl apply -f ./bubble-backend-green-deployment.yml
+	// 				'''
+	// 			}
+	// 		}
+	// 	}
+	// 	stage('Create the service in kubernetes cluster traffic to blue controller') {
+	// 		steps {
+	// 			withAWS(region:'us-east-1', credentials:'aws-creds') {
+	// 				sh '''
+	// 					kubectl apply -f ./bubble-backend-service.yml
+	// 				'''
+	// 			}
+	// 		}
+
+    //         stage('User approve to continue') {
+    //         steps {
+    //             timeout(time: 40, unit: 'MINUTES') {
+    //                     approved = input mesasage: 'Ready to change redirect traffic to green?', ok: 'Continue',
+    //                         parameters: [choice(name: 'approved', choices: 'Yes\nNo', description: 'Change traffic to green?')]
+    //                     if(approved != 'Yes'){
+    //                         error('Build not approved')
+    //                         }
+    //                     }
+    //                 } catch (error){
+    //                     error('Build not approved in time')
+    //                 }
+    //             }
+    //         }
+    //     }
+	// 	stage('Create the service in kubernetes cluster traffic to green controller') {
+	// 		steps {
+	// 			withAWS(region:'us-west-2', credentials:'aws-cli') {
+	// 				sh '''
+    //                     sed -i 'color/blue/green/' bubble-backend-service.yml
+	// 					kubectl apply -f ./bubble-backend-service.yml
+	// 				'''
+	// 			}
+	// 		}
+	// 	}
+    // }
 //     post {
 //         failure {
 //             script {
@@ -246,4 +298,17 @@ spec:
 //             sh 'docker container ls'
 //         }
 //     }
-}
+            // stage("Deploy to Production"){
+            //     steps{
+            //         script{
+            //             withAWS(credentials: 'aws-creds', region: 'us-east-1'){
+            //             //  sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
+            //             //  sh 'chmod u+x ./kubectl'
+            //             //  sh 'aws eks update-kubeconfig --profile 220307-kevin-sre-team-aqua --name team-aqua-mx2Egug --region us-east-1'
+            //              sh './kubectl get pods -n backend'
+            //              sh "echo $registry:$currentBuild.number"
+            //              sh "./kubectl set image -n backend deployment.apps/backend backend-container=$registry:$currentBuild.number"
+            //             }
+            //         }
+            //     }
+            // }
