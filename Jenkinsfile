@@ -35,6 +35,7 @@ spec:
     options {
         buildDiscarder(logRotator(daysToKeepStr: '7', numToKeepStr: '1'))
         disableConcurrentBuilds()
+        withAWS(profile: 'aws-creds')
     }
 
     environment {
