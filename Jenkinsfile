@@ -304,7 +304,7 @@ spec:
 //     }
             stage("Deploy to Production"){
                 steps{
-                container(kubectl){
+                container('kubectl'){
                     script{
                         withAWS(credentials: 'aws-creds', region: 'us-east-1'){
                         //  sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
