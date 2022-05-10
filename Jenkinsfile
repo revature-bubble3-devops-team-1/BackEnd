@@ -18,10 +18,6 @@ spec:
       volumeMounts:
         - name: docker
           mountPath: /var/run/docker.sock
-    - name: node-js
-      image: node:latest
-      command: ["tail", "-f", "/dev/null"]
-      imagePullPolicy: Always
   volumes:
   - name: docker
     hostPath:
@@ -32,6 +28,7 @@ spec:
 
     tools {
         maven 'maven'
+        curl 'curl' //
         // 'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker'
     }
 
@@ -43,7 +40,7 @@ spec:
     environment {
         PORT           = 5000
         VERSION        = 'latest'
-        REGISTRY       = 'archieaqua/bubble-f'
+        REGISTRY       = 'archieaqua/bubble-b'
         DOCKERHUBCREDS = 'dockerhub-creds'
         DOCKERIMAGE    = ''
 
