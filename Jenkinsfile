@@ -335,7 +335,7 @@ spec:
                 }
             }
         }//end stage
-            stage('Create the service in kubernetes cluster traffic to black deployment') {
+            stage('Create service for deployment') {
 			steps {
                 container ('kubectl') {
 				    withAWS(credentials:'aws-creds', region:'us-east-1') {
