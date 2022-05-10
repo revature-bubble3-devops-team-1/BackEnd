@@ -1,4 +1,4 @@
-@Library('github.com/releaseworks/jenkinslib') _
+@Library("jenkins-library") _
 pipeline {
     agent {
         kubernetes {
