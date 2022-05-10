@@ -7,6 +7,7 @@ import com.revature.models.Profile;
 import com.revature.repositories.ProfileRepo;
 import com.revature.utilites.SecurityUtil;
 
+import org.jboss.logging.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -196,6 +197,7 @@ public class ProfileServiceImpl implements ProfileService {
             return profile;
         } else {
             log.info("Unable to remove follow");
+            MDC.put("Email ", email);
         }
         return null;
     }

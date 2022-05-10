@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,9 +44,11 @@ public class EmailController {
 	@PostMapping("/verfied/email")
 	public boolean sendEmail(@RequestBody Map<?,?> emailMap) {
 		log.info("In Email Controller -----------------------");
+		MDC.put("Endoint ", (String) emailMap.get(URL));
 		HashMap<String, Object> tempMap = new HashMap<>();
 		tempMap.put(EMAIL, emailMap.get(EMAIL));
 		log.info((String) emailMap.get(EMAIL));
+		MDC.put("Email ", (String) emailMap.get(EMAIL));
 		tempMap.put(URL, emailMap.get(URL));
 
 		Profile emailProfile = new Profile();
@@ -72,7 +75,7 @@ public class EmailController {
 	public boolean emailVerified(@RequestBody String email) {
 		log.info("in validate---------------------");
 		log.info(EMAIL + ": " + email);
-		Profile profile = new Profile();
+		MDC.put("Email ", email);		Profile profile = new Profile();
 		profile.setEmail(email);
 
 		Profile prof = pserv.getProfileByEmail(profile);
