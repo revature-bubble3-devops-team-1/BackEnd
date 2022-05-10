@@ -40,7 +40,7 @@ spec:
 
     environment {
         PORT           = 5000
-        VERSION        = 'latest'
+        VERSION        = '1'
         REGISTRY       = 'archieaqua/bubble-b'
         DOCKERHUBCREDS = 'dockerhub-creds'
         DOCKERIMAGE    = ''
@@ -299,7 +299,7 @@ spec:
             stage("Deploy to Production"){
                 steps{
                     script{
-                        withAWS(credentials: 'aws-creds', username: 'AWS_ACCESS_KEY_ID', password: 'AWS_SECRET_ACCESS_KEY', region: 'us-east-1'){
+                        withAWS(credentials: 'aws-creds', region: 'us-east-1'){
                         //  sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
                         //  sh 'chmod u+x ./kubectl'
                         //  sh "aws eks update-kubeconfig --profile 220307-kevin-sre-team-aqua --name team-aqua-mx2Egug --region us-east-1"
