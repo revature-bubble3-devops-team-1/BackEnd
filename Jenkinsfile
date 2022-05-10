@@ -159,10 +159,10 @@ spec:
     //        stage("create kubeconfig file"){
 
     //        }
-           stage("deploy blue container"){
+        //    stage("deploy blue container"){
 
-               when {branch 'blue'}
-               steps {
+            //    when {branch 'blue'}
+            //    steps {
             stage('Create Image') {
                 steps {
                     container('docker'){
@@ -187,8 +187,7 @@ spec:
             }
         }
     }
-    }
-}
+
         //    stage("Redirect service to blue container"){
 
         //        when { branch "blue"
