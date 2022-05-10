@@ -305,8 +305,8 @@ spec:
                 steps{
                 container('kubectl'){
                     script{
-                        withKubeConfig([credentialsId: 'kube-config']) {
-                          sh "aws eks update-kubeconfig --name team-aqua-mx2ESgug --region us-east-1 "
+                        withAWS([credentialsId: 'aws-creds', region: 'us-east-1']) {
+                          sh "aws eks update-kubeconfig --name team-aqua-mx2ESgug"
                           sh 'kubectl get pods'
                           // The syntax below might be slightly off
                           sh 'kubectl apply -f ./Kubernetes/bubble-backend-service.yml'
