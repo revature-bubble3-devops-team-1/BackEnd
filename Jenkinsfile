@@ -19,10 +19,6 @@ spec:
       volumeMounts:
         - name: docker
           mountPath: /var/run/docker.sock
-  volumes:
-  - name: docker
-    hostPath:
-      path: /var/run/docker.sock
   resources:
     requests:
       memory: "300Mi"
@@ -35,6 +31,11 @@ spec:
     command:
     - cat
     tty: true
+  volumes:
+  - name: docker
+    hostPath:
+      path: /var/run/docker.sock
+
 """
     }
 } 
