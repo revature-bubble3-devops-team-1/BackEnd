@@ -20,8 +20,8 @@ spec:
         - name: docker
           mountPath: /var/run/docker.sock
   containers:
-    - name: aws-cli
-      image: aws-cli:latest
+    - name: pipelines-awscli
+      image: pipelines-awscli:latest
       command: ["tail", "-f", "/dev/null"]
       imagePullPolicy: Always
   volumes:
