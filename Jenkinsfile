@@ -41,7 +41,6 @@ spec:
     options {
         buildDiscarder(logRotator(daysToKeepStr: '7', numToKeepStr: '1'))
         disableConcurrentBuilds()
-        withAWS(profile: 'aws-creds')
     }
 
     environment {
@@ -311,7 +310,14 @@ spec:
                           sh 'kubectl get pods'
                           // The syntax below might be slightly off
                           sh "kubectl patch deployment deployment-name --set-image=$IMAGE_NAME:$IMAGE_TAG"
-
+                        // withAWS(credentials: 'aws-creds', region: 'us-east-1'){
+                        // //  sh 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
+                        // //  sh 'chmod u+x .kubectl'
+                        //  sh "aws configure --profile 220307-kevin-sre-team-aqua --aws_access_key_id "
+                        //  sh "aws eks update-kubeconfig --profile 220307-kevin-sre-team-aqua --name  arn:aws:eks:us-east-1:855430746673:cluster/team-aqua-mx2ESgug --region us-east-1"
+                        //  sh "./kubectl get pods -n backend"
+                        //  sh "echo $registry:$currentBuild.number"
+                        //  sh "./kubectl set image -n backend deployment.apps/backend backend-container=$registry:$currentBuild.number"
                         }
                       }
                     }
