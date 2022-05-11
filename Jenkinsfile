@@ -49,7 +49,7 @@ spec:
         REGISTRY       = 'archieaqua/bubble-b'
         DOCKERHUBCREDS = 'dockerhub-creds'
         DOCKERIMAGE    = ''
-        COLOR          = ''
+        COLOR          = 'test'
     }
 
     stages {
