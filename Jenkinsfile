@@ -1,7 +1,35 @@
 @Library("jenkins-library") _
 pipeline {
     agent {
-        kubernetes { }
+        kubernetes {
+            yaml """ 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: docker-pod
+  namespace:
+  labels:
+    app: docker
+spec:
+  containers:
+    - name: docker
+      image: docker:latest
+      command: ["tail", "-f", "/dev/null"]
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: docker
+          mountPath: /var/run/docker.sock
+    - name: kubectl
+      image: jshimko/kube-tools-aws:latest
+      command:
+      - cat
+      tty: true
+  volumes:
+  - name: docker
+    hostPath:
+      path: /var/run/docker.sock
+"""
+        }
     } 
 
     tools {
