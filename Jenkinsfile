@@ -318,7 +318,7 @@ spec:
                 container('kubectl'){
                     script{
                         withAWS(credentials:'aws-creds', region:'us-east-1'){
-                           env.COLOR = '$(echo kubectl get service backend -o jsonpath="{.spec.selector.color}")'
+                           env.COLOR = sh '$(echo kubectl get service backend -o jsonpath="{.spec.selector.color}")'
                         }
                         sh 'echo ${env.COLOR}'
                     }
