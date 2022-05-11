@@ -52,27 +52,6 @@ spec:
     }
 
     stages {
-        stage('Reroute Traffic') { 
-            steps {
-                container('kubectl'){
-                    script {
-
-                        withAWS(credentials:'aws-creds', region:'us-east-1'){
-
-                            sh 'aws eks update-kubeconfig --name team-aqua-mx2ESgug'
-
-                            if (sh(script: "kubectl get service backend -o jsonpath='{.spec.selector.color}'", returnStdout: true).trim() == 'blue') {
-                                
-                                sh 'kubectl patch svc backend -n default --type=json -p \'[{\"op\":\"replace\",\"path\":\"/spec/selector/color\",\"value\":\"green\"}]\''
-
-                            } else {
-                                sh 'kubectl patch svc backend -n default --type=json -p \'[{\"op\":\"replace\",\"path\":\"/spec/selector/color\",\"value\":\"blue\"}]\'' 
-                            }
-                        }
-                    } 
-                }
-            }
-        }
         // stage('Code Quality Analysis') {
         //     steps{
         //         withSonarQubeEnv(credentialsId: 'sonar-token', installationName: 'sonar-qube') {
@@ -173,27 +152,27 @@ spec:
                 }
             }
         }
-        // stage('Reroute Traffic') { 
-        //     steps {
-        //         container('kubectl'){
-        //             script {
+        stage('Reroute Traffic') { 
+            steps {
+                container('kubectl'){
+                    script {
 
-        //                 withAWS(credentials:'aws-creds', region:'us-east-1'){
+                        withAWS(credentials:'aws-creds', region:'us-east-1'){
 
-        //                     sh 'aws eks update-kubeconfig --name team-aqua-mx2ESgug'
+                            sh 'aws eks update-kubeconfig --name team-aqua-mx2ESgug'
 
-        //                     if (sh(script: "kubectl get service backend -o jsonpath='{.spec.selector.color}'", returnStdout: true).trim() == 'blue') {
+                            if (sh(script: "kubectl get service backend -o jsonpath='{.spec.selector.color}'", returnStdout: true).trim() == 'blue') {
                                 
-        //                         sh 'kubectl patch svc backend -n default --type=json -p \'[{\\"op\\":\\"replace\\",\\"path\\":\\"/spec/selector/color\\",\\"value\\":\\"green\\"}]\''
+                                sh 'kubectl patch svc backend -n default --type=json -p \'[{\\"op\\":\\"replace\\",\\"path\\":\\"/spec/selector/color\\",\\"value\\":\\"green\\"}]\''
 
-        //                     } else {
-        //                         sh 'kubectl patch svc backend -n default --type=json -p \'[{\\"op\\":\\"replace\\",\\"path\\":\\"/spec/selector/color\\",\\"value\\":\\"blue\\"}]\'' 
-        //                     }
-        //                 }
-        //             } 
-        //         }
-        //     }
-        // }
+                            } else {
+                                sh 'kubectl patch svc backend -n default --type=json -p \'[{\\"op\\":\\"replace\\",\\"path\\":\\"/spec/selector/color\\",\\"value\\":\\"blue\\"}]\'' 
+                            }
+                        }
+                    } 
+                }
+            }
+        }
     }
  }
 
