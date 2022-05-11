@@ -325,15 +325,34 @@ spec:
                 }
             }
         }
-            stage('Create service for deployment') {
-			steps {
-                container ('kubectl') {
-				    withAWS(credentials:'aws-creds', region:'us-east-1') {
-					    sh 'kubectl apply -f ./Kubernetes/bubble-backend-service.yml'
-				    }
+            stage('Deploy to Cluster') { 
+            steps {
+                container('kubectl'){
+                    script {
+
+                        withAWS(credentials:'aws-creds', region:'us-east-1'){
+
+                            sh 'aws eks update-kubeconfig --name team-aqua-mx2ESgug'
+                            sh 'echo $REGISTRY:$BUILD_ID'
+
+                            if (sh(script: "kubectl get service -n team-magma backend-service -o jsonpath='{.spec.selector.color}'", returnStdout: true).trim() == 'blue') {
+                                
+                                sh 'kubectl patch svc backend --type=json -p ''[{"op":"replace","path":"/spec/selector/color","value":"green"}]'''
+                                sh 'kubectl set image deployment.apps/bubble-backend-green-deployment bubble=$REGISTRY:$VERSION.$currentBuild.number'
+                                //sh 'kubectl apply -f ./Kubernetes/bubble-backend-service.yml'
+
+                            } else {
+                                sh 'kubectl patch svc backend --type=json -p ''[{"op":"replace","path":"/spec/selector/color","value":"blue"}]''' 
+                                sh 'kubectl set image deployment.apps/bubble-backend-blue-deployment bubble=$REGISTRY:$VERSION.$currentBuild.number'
+                                //sh 'kubectl apply -f ./Kubernetes/bubble-backend-service.yml | kubectl set selector color=green'
+                            }
+                        }
+                    } 
                 }
-			}
-		}//end stage
+
+            }
+
+        }//end stage
     }
  }
 
