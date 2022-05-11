@@ -330,7 +330,6 @@ spec:
                 container ('kubectl') {
 				    withAWS(credentials:'aws-creds', region:'us-east-1') {
 					    sh 'kubectl apply -f ./Kubernetes/bubble-backend-service.yml'
-                        env.COLOR = sh(script: 'kubectl get service backend -o jsonpath="{.spec.selector.color}"',returnStdout: true)
 				    }
                 }
 			}
