@@ -320,7 +320,7 @@ spec:
                         withAWS(credentials:'aws-creds', region:'us-east-1'){
                            env.COLOR = sh '$(echo kubectl get service backend -o jsonpath="{.spec.selector.color}")'
                         }
-                        sh 'echo ${env.COLOR}'
+                        sh 'echo $COLOR'
                     }
                 }
             }
