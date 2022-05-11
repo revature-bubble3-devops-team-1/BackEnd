@@ -125,9 +125,11 @@ spec:
                             sh 'echo $REGISTRY:$VERSION.$BUILD_ID'
 
                             if (sh(script: "kubectl get service backend -o jsonpath='{.spec.selector.color}'", returnStdout: true).trim() == 'blue') {
-                                sh 'kubectl set image deployment.apps/backend-green bubble=$REGISTRY:$VERSION.$BUILD_ID'
+                                sh 'kubectl get all'
+                                sh 'kubectl set image deployment.apps/backend-green bubble=$REGISTRY:$VERSION.$BUILD_ID -n default'
                             } else {
-                                sh 'kubectl set image deployment.apps/backend-blue bubble=$REGISTRY:$VERSION.$BUILD_ID'
+                                sh 'kubectl get all'
+                                sh 'kubectl set image deployment.apps/backend-blue bubble=$REGISTRY:$VERSION.$BUILD_ID -n default'
                             }
                         }
                     } 
@@ -163,10 +165,10 @@ spec:
 
                             if (sh(script: "kubectl get service backend -o jsonpath='{.spec.selector.color}'", returnStdout: true).trim() == 'blue') {
                                 
-                                sh 'kubectl patch svc backend --type=json -p \'[{\\"op\\":\\"replace\\",\\"path\\":\\"/spec/selector/color\\",\\"value\\":\\"green\\"}]\''
+                                sh 'kubectl patch svc backend -n default --type=json -p \'[{\\"op\\":\\"replace\\",\\"path\\":\\"/spec/selector/color\\",\\"value\\":\\"green\\"}]\''
 
                             } else {
-                                sh 'kubectl patch svc backend --type=json -p \'[{\\"op\\":\\"replace\\",\\"path\\":\\"/spec/selector/color\\",\\"value\\":\\"blue\\"}]\'' 
+                                sh 'kubectl patch svc backend -n default --type=json -p \'[{\\"op\\":\\"replace\\",\\"path\\":\\"/spec/selector/color\\",\\"value\\":\\"blue\\"}]\'' 
                             }
                         }
                     } 
