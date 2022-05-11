@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-blue
+  # namespace: blue
+spec:
+  selector:
+    matchLabels:
+      app: bubble
+      tier: frontend
+      color: blue
+      track: stable
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bubble
+        tier: frontend
+        color: blue
+        track: stable
+    spec:
+      nodeSelector:
+        name: w1
+      containers:
+        - name: nginx
+          image: "archieaqua/bubble-f:0.2"
+          ports:
+            - containerPort: 80
