@@ -163,10 +163,10 @@ spec:
 
                             if (sh(script: "kubectl get service backend -o jsonpath='{.spec.selector.color}'", returnStdout: true).trim() == 'blue') {
                                 
-                                sh 'kubectl patch svc backend -n default --type=json -p \'[{\"op\\":\"replace\",\"path\":\"/spec/selector/color\",\"value\":\"green\"}]\''
+                                sh 'kubectl patch svc backend -n default --type=json -p \'[{\"op\":\"replace\",\"path\":\"/spec/selector/color\",\"value\":\"green\"}]\''
 
                             } else {
-                                sh 'kubectl patch svc backend -n default --type=json -p \'[{\"op\\":\"replace\",\"path\":\"/spec/selector/color\",\"value\":\"blue\"}]\'' 
+                                sh 'kubectl patch svc backend -n default --type=json -p \'[{\"op\":\"replace\",\"path\":\"/spec/selector/color\",\"value\":\"blue\"}]\'' 
                             }
                         }
                     } 
