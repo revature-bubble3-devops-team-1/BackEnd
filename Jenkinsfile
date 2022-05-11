@@ -335,15 +335,15 @@ spec:
                             sh 'aws eks update-kubeconfig --name team-aqua-mx2ESgug'
                             sh 'echo $REGISTRY:$BUILD_ID'
 
-                            if (sh(script: "kubectl get service backend-service -o jsonpath='{.spec.selector.color}'", returnStdout: true).trim() == 'blue') {
+                            if (sh(script: "kubectl get service backend -o jsonpath='{.spec.selector.color}'", returnStdout: true).trim() == 'blue') {
                                 
                                 sh 'kubectl patch svc backend --type=json -p ''[{"op":"replace","path":"/spec/selector/color","value":"green"}]'''
-                                sh 'kubectl set image deployment.apps/bubble-backend-green-deployment bubble=$REGISTRY:$VERSION.$currentBuild.number'
+                                sh 'kubectl set image deployment.apps/backend-green bubble=$REGISTRY:$VERSION.$currentBuild.number'
                                 //sh 'kubectl apply -f ./Kubernetes/bubble-backend-service.yml'
 
                             } else {
                                 sh 'kubectl patch svc backend --type=json -p ''[{"op":"replace","path":"/spec/selector/color","value":"blue"}]''' 
-                                sh 'kubectl set image deployment.apps/bubble-backend-blue-deployment bubble=$REGISTRY:$VERSION.$currentBuild.number'
+                                sh 'kubectl set image deployment.apps/backend-blue bubble=$REGISTRY:$VERSION.$currentBuild.number'
                                 //sh 'kubectl apply -f ./Kubernetes/bubble-backend-service.yml | kubectl set selector color=green'
                             }
                         }
