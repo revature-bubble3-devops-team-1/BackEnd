@@ -24,13 +24,13 @@ pipeline {
     }
 
     stages {
-        stage('Code Quality Analysis') {
-            steps{
-                withSonarQubeEnv(credentialsId: 'sonar-token', installationName: 'sonar') {
-                    sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=revature-bubble3-devops-team-1_BackEnd'
-                }
-            }
-        }
+        // stage('Code Quality Analysis') {
+        //     steps{
+        //         withSonarQubeEnv(credentialsId: 'sonar-token', installationName: 'sonar') {
+        //             sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=revature-bubble3-devops-team-1_BackEnd'
+        //         }
+        //     }
+        // }
         stage('Clean & Package Directory') {
             steps {
                 sh 'mvn clean'
