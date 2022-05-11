@@ -85,7 +85,7 @@ spec:
                     container('docker'){
                     script {
                         docker.withRegistry('', DOCKERHUBCREDS){
-                            docker.image(REGISTRY).push("$VERSION.$currentBuild.number")
+                            docker.image(REGISTRY).push("$VERSION.$BUILD_ID")
                         }
                     }
                 }
@@ -122,12 +122,12 @@ spec:
                         withAWS(credentials:'aws-creds', region:'us-east-1'){
 
                             sh 'aws eks update-kubeconfig --name team-aqua-mx2ESgug'
-                            sh 'echo $REGISTRY:$BUILD_ID'
+                            sh 'echo $REGISTRY:$VERSION.$BUILD_ID'
 
                             if (sh(script: "kubectl get service backend -o jsonpath='{.spec.selector.color}'", returnStdout: true).trim() == 'blue') {
-                                sh 'kubectl set image deployment.apps/backend-green bubble=$REGISTRY:$VERSION.$currentBuild.number'
+                                sh 'kubectl set image deployment.apps/backend-green bubble=$REGISTRY:$VERSION.$BUILD_ID'
                             } else {
-                                sh 'kubectl set image deployment.apps/backend-blue bubble=$REGISTRY:$VERSION.$currentBuild.number'
+                                sh 'kubectl set image deployment.apps/backend-blue bubble=$REGISTRY:$VERSION.$BUILD_ID'
                             }
                         }
                     } 
