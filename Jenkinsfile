@@ -52,13 +52,13 @@ spec:
     }
 
     stages {
-        // stage('Code Quality Analysis') {
-        //     steps{
-        //         withSonarQubeEnv(credentialsId: 'sonar-token', installationName: 'sonar') {
-        //             sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=revature-bubble3-devops-team-1_BackEnd'
-        //         }
-        //     }
-        // }
+        stage('Code Quality Analysis') {
+            steps{
+                withSonarQubeEnv(credentialsId: 'sonar-token', installationName: 'sonar-qube') {
+                    sh 'mvn -f pom.xml verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=revature-bubble3-devops-team-1_BackEnd'
+                }
+            }
+        }
         stage('Clean & Package Directory') {
             steps {
                 sh 'mvn clean'
@@ -125,10 +125,8 @@ spec:
                             sh 'echo $REGISTRY:$VERSION.$BUILD_ID'
 
                             if (sh(script: "kubectl get service backend -o jsonpath='{.spec.selector.color}'", returnStdout: true).trim() == 'blue') {
-                                sh 'kubectl get all'
                                 sh 'kubectl set image deployment.apps/backend-green bubble=$REGISTRY:$VERSION.$BUILD_ID -n default'
                             } else {
-                                sh 'kubectl get all'
                                 sh 'kubectl set image deployment.apps/backend-blue bubble=$REGISTRY:$VERSION.$BUILD_ID -n default'
                             }
                         }
@@ -142,7 +140,7 @@ spec:
                     // Prompt, if yes build, if no abort
                     try {
                         timeout(time: 30, unit: 'MINUTES'){
-                            approved = input message: 'Is standby pod healthy?', ok: 'Continue deployment',
+                            approved = input message: 'Is standby pod healthy?', ok: 'Continue',
                                 parameters: [choice(name: 'approved', choices: 'Yes\nNo', description: 'Deploy this pod')]
                             if(approved != 'Yes'){
                                 error('Build not approved')
